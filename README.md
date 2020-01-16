@@ -18,4 +18,4 @@ Lisäksi voidaan laskea kunkin soittajan läsnäoloprosentti kaikista tapahtumis
 
 <img src="https://github.com/Robustic/Orchestime/blob/master/documentation/pictures/DatabaseChart.png" width="1410">
 
-Kuva 1. Tietokantakaavio
+**Kuva 1.** *Tietokantakaavio.*
