@@ -1,0 +1,14 @@
+{% extends "layout.html" %}
+
+{% block body %}
+  <table>
+    <tr>
+      <th>Instrument</th>
+    </tr>
+    {% for instrument in instruments %}
+    <tr>
+      <td>{{ instrument.name }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+{% endblock %}

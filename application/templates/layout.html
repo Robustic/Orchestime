@@ -6,6 +6,10 @@
   </head>
 
   <body>
+    <ul>
+      <li><a href="{{ url_for('instruments_index') }}">List instruments</a></li>
+      <li><a href="{{ url_for('instruments_form') }}">Add an instrument</a></li>
+    </ul>
     {% block body %}
       <p>
         Content.
