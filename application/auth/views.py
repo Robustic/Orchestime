@@ -18,7 +18,7 @@ def auth_create():
     if not form.validate():
         return render_template("auth/newaccountform.html", form=form)
 
-    account = User(form.name.data, form.username.data, bcrypt.generate_password_hash(form.password.data))
+    account = User(form.name.data, form.username.data, bcrypt.generate_password_hash(form.password.data).decode('utf-8'))
     db.session().add(account)
     db.session().commit()
     return redirect(url_for("auth_form"))
