@@ -12,8 +12,8 @@
   
   ``` SELECT * FROM  instrument;```
   
-  * As an logged in user, I can add an instrument to the instrument list.
+  * As a logged in user, I can add an instrument to the instrument list.
   
-  * As an logged in user, I can update an instrument name.
+  * As a logged in user, I can update an instrument name.
   
-  * As an logged in user, I can delete the instrument from the list.
+  * As a logged in user, I can delete the instrument from the list.
