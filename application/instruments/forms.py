@@ -7,3 +7,10 @@ class InstrumentForm(FlaskForm):
     
     class Meta:
         csrf = False
+
+
+class InstrumentupdateForm(FlaskForm):
+    name = StringField("Updated name", [validators.Length(min=2)])
+
+    class Meta:
+        csrf = False
