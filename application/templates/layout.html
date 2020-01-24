@@ -6,6 +6,16 @@
   </head>
 
   <body>
+    {% if current_user.is_authenticated %}
+      <p>
+        Logged in as {{ current_user.name }}
+        <a href="{{ url_for('auth_logout') }}">Logout</a>
+      </p>
+    {% else %}
+      <a href="{{ url_for('auth_login') }}">Log in</a>
+      <a href="{{ url_for('auth_form') }}">Register</a>
+    {% endif %}
+    
     <ul>
       <li><a href="{{ url_for('instruments_index') }}">List instruments</a></li>
       <li><a href="{{ url_for('instruments_form') }}">Add an instrument</a></li>
