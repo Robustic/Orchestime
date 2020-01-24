@@ -15,7 +15,17 @@
       <a href="{{ url_for('auth_login') }}">Log in</a>
       <a href="{{ url_for('auth_form') }}">Register</a>
     {% endif %}
-    
+
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <ul class=flashes>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+      {% endif %}
+    {% endwith %}
+
     <ul>
       <li><a href="{{ url_for('instruments_index') }}">List instruments</a></li>
       <li><a href="{{ url_for('instruments_form') }}">Add an instrument</a></li>
