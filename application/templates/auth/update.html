@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+  
+{% block body %}
+<form method="POST" action="{{ url_for('auth_update', auth_id=current_user.id) }}">
+  <table>
+    <tr>
+      <td>
+        <b>Old name: {{ current_user.name }}</b>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.name.label }}
+      </td>
+      <td>
+        {{ form.name }}
+      </td>
+      <td>
+        <ul>
+          {% for nameerror in form.name.errors %}
+          <li>
+            {{ nameerror }}
+          </li>
+          {% endfor %}
+        </ul>
+      </td>
+    </tr>
+    <tr>
+      <td>
+        {{ form.instrument_id.label }}
+      </td>
+      <td>
+        {{ form.instrument_id }}
+      </td>
+    </tr>
+    <tr>
+      <td colspan="2">
+        <input type="submit" value="Update name and instrument"/>
+      </td>
+    </tr>
+  </table>
+</form>
+{% endblock %}

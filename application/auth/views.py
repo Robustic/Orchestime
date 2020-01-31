@@ -1,10 +1,9 @@
 from flask import redirect, render_template, request, url_for
-from flask_login import login_user, logout_user
+from flask_login import login_required, login_user, logout_user
 
 from application import app, db, bcrypt
 from application.auth.models import User
-from application.auth.forms import LoginForm
-from application.auth.forms import NewaccountForm
+from application.auth.forms import LoginForm, NewaccountForm, UpdateaccountForm
 
 
 @app.route("/auth/new")
@@ -24,13 +23,34 @@ def auth_create():
     return redirect(url_for("auth_form"))
 
 
+@app.route("/auth/<auth_id>/", methods=["GET"])
+@login_required
+def auth_view(auth_id):
+    account = User.query.get(auth_id)
+    return render_template("auth/update.html", account=account, form=UpdateaccountForm())
+
+
+@app.route("/auth/<auth_id>/update/", methods=["POST"])
+@login_required
+def auth_update(auth_id):
+    form = UpdateaccountForm(request.form)
+    account = User.query.get(auth_id)
+    form.instrument_id.data = int(form.instrument_id.data[0])
+    if not form.validate():
+        return render_template("auth/update.html", instrument=account, form=UpdateaccountForm())
+    if len(form.name.data) > 1:
+        account.name = form.name.data
+    account.instrument_id = form.instrument_id.data
+    db.session().commit()
+    return redirect(url_for("index"))
+
+
 @app.route("/auth/login", methods=["GET", "POST"])
 def auth_login():
     if request.method == "GET":
         return render_template("auth/loginform.html", form=LoginForm())
 
     form = LoginForm(request.form)
-    # mahdolliset validoinnit
 
     userfromdb = User.query.filter_by(username=form.username.data).first()
 

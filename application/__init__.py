@@ -1,5 +1,6 @@
 from flask import Flask
 app = Flask(__name__)
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 from flask_bcrypt import Bcrypt
 bcrypt = Bcrypt(app)
@@ -16,14 +17,8 @@ else:
 
 db = SQLAlchemy(app)
 
-from application import views
-
 from application.instruments import models
-from application.instruments import views
-
 from application.auth import models
-from application.auth import views
-
 from application.auth.models import User
 from os import urandom
 app.config["SECRET_KEY"] = urandom(32)
@@ -45,3 +40,16 @@ try:
     db.create_all()
 except:
     pass
+    print("***Error, database not created. ***")
+
+
+from application.instruments.models import Instrument
+
+if not Instrument.query.filter_by(name="Instrument not selected").first():
+    instr = Instrument("Instrument not selected")
+    db.session().add(instr)
+    db.session().commit()
+
+from application import views
+from application.instruments import views
+from application.auth import views

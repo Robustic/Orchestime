@@ -9,6 +9,7 @@ from application.instruments.forms import InstrumentupdateForm
 
 @app.route("/instruments", methods=["GET"])
 def instruments_index():
+
     return render_template("instruments/list.html", instruments=Instrument.query.all())
 
 
@@ -28,7 +29,6 @@ def instruments_delete(instrument_id):
 
 
 @app.route("/instruments/<instrument_id>/", methods=["GET"])
-@login_required
 def instrument_view(instrument_id):
     instru = Instrument.query.get(instrument_id)
     return render_template("instruments/update.html", instrument=instru, form=InstrumentupdateForm())
