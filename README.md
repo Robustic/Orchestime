@@ -6,6 +6,12 @@ Orchestime on Tietokantasovellus -harjoitustyökurssin 2020 kevät aikana muodos
 
 [Orchestime](https://orchestime.herokuapp.com/instruments)
 
+Testitunnukset Herokuun kirjautumista varten:
+
+username: testikayttaja
+
+password: r5testAilija.Mpw93
+
 ## Aihekuvaus ja tietokantakaavio
 
 [Aihekuvaus ja tietokantakaavio](https://github.com/Robustic/Orchestime/tree/master/documentation/description.md)
