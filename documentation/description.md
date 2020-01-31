@@ -6,12 +6,14 @@ Jokaiseen tapahtumaan liittyy huone, joka puolestaan liittyy johonkin paikkaan.
 
 Toisaalta tapahtumiin liittyy henkilöitä (soittajia), jotka voivat ilmoittaa itsensä poissaolevaksi. Jokainen henkilö soittaa jotakin instrumenttia.
 
-Tietokantataulujen Event (tapahtuma) ja Person (henkilö) välillä on monesta moneen yhteys, joten niiden välillä on liitostaulu.
+Henkilö voi ilmoittautua poissa-olevaksi tietyn mittaiseksi ajaksi. Poissaolojaksolle voi sattua monta tapahtumaa. Toisaalta tapahtumilla voi olla monta poissaoloa, koska useat henkilöt voivat olla poissa.
+
+Tietokantataulujen Event (tapahtuma) ja Absence (poissa-olo) välillä on monesta moneen yhteys, joten niiden välillä on liitostaulu EventAbsence.
 
 Kullekin tapahtumalle voidaan suorittaa haku, jossa lasketaan kuinka monta kunkin instrumentin soittajaa on poissa kyseisestä tapahtumasta.
 
 Lisäksi voidaan laskea kunkin soittajan läsnäoloprosentti kaikista tapahtumista tai tietyllä aikavälillä.
 
-<img src="https://github.com/Robustic/Orchestime/blob/master/documentation/pictures/DatabaseChart.png" width="1410">
+<img src="https://github.com/Robustic/Orchestime/blob/master/documentation/pictures/DatabaseChart.png" width="874">
 
 **Kuva 1.** *Tietokantakaavio.*
