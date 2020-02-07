@@ -5,9 +5,9 @@ from sqlalchemy.sql import text
 
 
 absence_event = db.Table('absence_event',
-                         db.Column('absence_id', db.Integer, db.ForeignKey('absence.id')),
-                         db.Column('event_id', db.Integer, db.ForeignKey('event.id'))
-                         )
+                         db.Column('absence_id', db.Integer, db.ForeignKey('absence.id'), nullable=False),
+                         db.Column('event_id', db.Integer, db.ForeignKey('event.id'), nullable=False),
+                         db.PrimaryKeyConstraint('absence_id', 'event_id'))
 
 
 class Event(Base):
@@ -16,7 +16,7 @@ class Event(Base):
     date_start = db.Column(db.DateTime, nullable=False)
     date_end = db.Column(db.DateTime, nullable=False)
 
-    absence_events = db.relationship('Absence', secondary=absence_event)
+    absence_events = db.relationship('Absence', secondary=absence_event, backref='event')
 
     def __init__(self, name, description, date_start, date_end):
         self.name = name
