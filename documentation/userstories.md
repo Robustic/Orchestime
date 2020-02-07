@@ -36,7 +36,8 @@
 
   * As an user, I can list all absences for the selected event as a list.
 
-  ``` SELECT account.name as account_name, 
+  ``` 
+             SELECT account.name as account_name, 
              Absence.name as absence_name, 
              Absence.description as absence_description, 
              Absence.date_start as absence_date_start, 
@@ -45,5 +46,6 @@
              LEFT JOIN absence_event ON Event.id = absence_event.event_id 
              LEFT JOIN Absence ON Absence.id = absence_event.absence_id 
              LEFT JOIN account ON account.id = Absence.account_id 
-             WHERE (Event.id = 4);```
+             WHERE (Event.id = 4);
+  ```
 
