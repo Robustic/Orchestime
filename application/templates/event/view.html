@@ -1,0 +1,44 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Description</th>
+            <th>Start date</th>
+            <th>End date</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{ event.name }}</td>
+            <td>{{ event.description }}</td>
+            <td>{{ event.date_start.strftime('%Y-%m-%d') }}</td>
+            <td>{{ event.date_end.strftime('%Y-%m-%d') }}</td>
+        </tr>
+    </tbody>
+</table>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name of the user</th>
+            <th>Absence</th>
+            <th>Description</th>
+            <th>Absence start date</th>
+            <th>Absence end date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for notavailable in notavailables %}
+        <tr>
+            <td>{{ notavailable.account_name }}</td>
+            <td>{{ notavailable.absence_name }}</td>
+            <td>{{ notavailable.absence_description }}</td>
+            <td>{{ notavailable.absence_date_start[0:10] }}</td>
+            <td>{{ notavailable.absence_date_end[0:10] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

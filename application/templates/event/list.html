@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Event</th>
+            <th>Description</th>
+            <th>Start date</th>
+            <th>End date</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    {% for event in events %}
+    <tbody>
+        <tr>
+            <td>{{ event.name }}</td>
+            <td>{{ event.description }}</td>
+            <td>{{ event.date_start.strftime('%Y-%m-%d') }}</td>
+            <td>{{ event.date_end.strftime('%Y-%m-%d') }}</td>
+            <td><a href="{{ url_for('event_view', event_id=event.id) }}">View event details</a></td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% endblock %}

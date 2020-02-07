@@ -47,8 +47,10 @@
       {% endwith %}
 
       <ul>
+        <li><a href="{{ url_for('events_index') }}">List events</a></li>
+        <li><a href="{{ url_for('events_form') }}">Add an event</a></li>
         <li><a href="{{ url_for('absences_index') }}">List absences</a></li>
-        <li><a href="{{ url_for('absences_form') }}">Add an absences</a></li>
+        <li><a href="{{ url_for('absences_form') }}">Add an absence</a></li>
         <li><a href="{{ url_for('instruments_index') }}">List instruments</a></li>
         <li><a href="{{ url_for('instruments_form') }}">Add an instrument</a></li>
       </ul>

@@ -1,6 +1,8 @@
 from application import db
 from application.models import Base
 
+from sqlalchemy.sql import text
+
 
 class Absence(Base):
 
@@ -17,3 +19,11 @@ class Absence(Base):
         self.date_start = date_start
         self.date_end = date_end
         self.account_id = account_id
+
+    @staticmethod
+    def find_absences_between_timepoints(start, end):
+        stmt = text("SELECT * FROM Absence"
+                    " WHERE (Absence.date_end >= :x)"
+                    " AND (Absence.date_start <= :y)")
+        stmt = stmt.bindparams(x=start, y=end)
+        return db.engine.execute(stmt)

@@ -19,6 +19,7 @@ db = SQLAlchemy(app)
 
 from application.instrument import models
 from application.absence import models
+from application.event import models
 from application.auth import models
 from application.auth.models import User
 from os import urandom
@@ -54,4 +55,5 @@ if not Instrument.query.filter_by(name="Instrument not selected").first():
 from application import views
 from application.instrument import views
 from application.absence import views
+from application.event import views
 from application.auth import views
