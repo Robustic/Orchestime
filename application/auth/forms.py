@@ -18,7 +18,6 @@ class UpdateaccountForm(FlaskForm):
 
     instrumentList = []
     instruments = Instrument.query.all()
-    print("instrument: " + str(len(instruments)))
     for instrument in instruments:
         instrumentList.append((instrument.id, instrument.name))
     instrument_id = SelectField('Instrument', choices=instrumentList)
