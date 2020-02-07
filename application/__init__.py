@@ -20,11 +20,18 @@ else:
 
 db = SQLAlchemy(app)
 
+
 from application.instrument import models
+from application.auth import models
 from application.absence import models
 from application.event import models
-from application.auth import models
+
+from application.instrument.models import Instrument
 from application.auth.models import User
+from application.absence.models import Absence
+from application.event.models import Event
+from application.event.models import absence_event
+
 from os import urandom
 app.config["SECRET_KEY"] = urandom(32)
 
@@ -47,8 +54,11 @@ except:
     pass
     print("***Error, database not created. ***")
 
-
-from application.instrument.models import Instrument
+Model.account.create(db.session.bind, checkfirst=True)
+Model.instrument.create(db.session.bind, checkfirst=True)
+Model.absence.create(db.session.bind, checkfirst=True)
+Model.event.create(db.session.bind, checkfirst=True)
+Model.absence_event.create(db.session.bind, checkfirst=True)
 
 if not Instrument.query.filter_by(name="Instrument not selected").first():
     instr = Instrument("Instrument not selected")
