@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, SelectField, StringField
-from application.instruments.models import Instrument
+from application.instrument.models import Instrument
 
 
 class NewaccountForm(FlaskForm):
@@ -18,7 +18,7 @@ class UpdateaccountForm(FlaskForm):
 
     instrumentList = []
     instruments = Instrument.query.all()
-    print("instruments: " + str(len(instruments)))
+    print("instrument: " + str(len(instruments)))
     for instrument in instruments:
         instrumentList.append((instrument.id, instrument.name))
     instrument_id = SelectField('Instrument', choices=instrumentList)

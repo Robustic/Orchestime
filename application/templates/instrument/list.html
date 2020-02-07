@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Instrument</th>
+        </tr>
+    </thead>
+    {% for instrument in instruments %}
+    <tbody>
+        <tr>
+            <td>{{ instrument.name }}</td>
+            <td><a href="{{ url_for('instrument_view', instrument_id=instrument.id) }}">Update instrument</a></td>
+      </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% endblock %}

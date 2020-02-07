@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Absence</th>
+            <th>Who is absent</th>
+            <th>Description</th>
+            <th>Start date</th>
+            <th>End date</th>
+        </tr>
+    </thead>
+    {% for absence in absences %}
+    <tbody>
+        <tr>
+            <td>{{ absence.name }}</td>
+            <td>{{ absence.account.name }}</td>
+            <td>{{ absence.description }}</td>
+            <td>{{ absence.date_start.strftime('%Y-%m-%d') }}</td>
+            <td>{{ absence.date_end.strftime('%Y-%m-%d') }}</td>
+        </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% endblock %}

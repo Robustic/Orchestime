@@ -17,7 +17,8 @@ else:
 
 db = SQLAlchemy(app)
 
-from application.instruments import models
+from application.instrument import models
+from application.absence import models
 from application.auth import models
 from application.auth.models import User
 from os import urandom
@@ -43,7 +44,7 @@ except:
     print("***Error, database not created. ***")
 
 
-from application.instruments.models import Instrument
+from application.instrument.models import Instrument
 
 if not Instrument.query.filter_by(name="Instrument not selected").first():
     instr = Instrument("Instrument not selected")
@@ -51,5 +52,6 @@ if not Instrument.query.filter_by(name="Instrument not selected").first():
     db.session().commit()
 
 from application import views
-from application.instruments import views
+from application.instrument import views
+from application.absence import views
 from application.auth import views

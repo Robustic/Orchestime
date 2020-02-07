@@ -1,0 +1,72 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('absences_create') }}">
+    <table>
+        <tr>
+            <td>
+                {{ form.name.label }}
+            </td>
+            <td>
+                {{ form.name }}
+            </td>
+            <td>
+                <ul>
+                    {% for nameerror in form.name.errors %}
+                    <li>
+                        {{ nameerror }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.description.label }}
+            </td>
+            <td>
+                {{ form.description }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.date_start.label }}
+            </td>
+            <td>
+                {{ form.date_start }}
+            </td>
+            <td>
+                <ul>
+                    {% for date_starterror in form.date_start.errors %}
+                    <li>
+                        {{ date_starterror }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.date_end.label }}
+            </td>
+            <td>
+                {{ form.date_end }}
+            </td>
+            <td>
+                <ul>
+                    {% for date_enderror in form.date_end.errors %}
+                    <li>
+                        {{ ddate_enderror }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Add a new absence"/>
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock %}
