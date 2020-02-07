@@ -1,68 +1,86 @@
 <!DOCTYPE html>
 <html>
-  <head>
+<head>
     <meta charset="utf-8">
     <title>Orchestime</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-  </head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
 
-  <body>
-    <nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
-      <a class="navbar-brand" href="#">Orchestration</a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+<body>
+<nav class="navbar navbar-expand-md navbar-dark bg-dark mb-4">
+    <a class="navbar-brand" href="#">Orchestration</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarCollapse"
+            aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
-	  </button>
-      <div class="collapse navbar-collapse" id="navbarCollapse">
+    </button>
+    <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
-          {% if current_user.is_authenticated %}
+            {% if current_user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link"> (Logged in as "{{ current_user.name }}") &nbsp;&nbsp;</a>
+                <a class="nav-link"> (Logged in as "{{ current_user.name }}")</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth_logout') }}">Logout &nbsp;&nbsp;</a>
+                <a class="nav-link" href="{{ url_for('auth_logout') }}">Logout</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth_view', auth_id=current_user.id) }}">Update name or instrument of the user &nbsp;&nbsp;</a>
+                <a class="nav-link" href="{{ url_for('auth_view', auth_id=current_user.id) }}">Update name or instrument
+                    of the user &nbsp;&nbsp;</a>
             </li>
-          {% else %}
+            {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth_login') }}">Log in &nbsp;&nbsp;</a>
+                <a class="nav-link" href="{{ url_for('auth_login') }}">Log in</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('auth_form') }}">Register &nbsp;&nbsp;</a>
+                <a class="nav-link" href="{{ url_for('auth_form') }}">Register</a>
             </li>
-          {% endif %}
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('events_index') }}">List events</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('events_form') }}">Add an event</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('absences_index') }}">List absences</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('absences_form') }}">Add an absence</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('instruments_index') }}">List instruments</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('instruments_form') }}">Add an instrument</a>
+            </li>
         </ul>
-      </div>
-    </nav>
-    <main role="main" class="container">
-      {% with messages = get_flashed_messages() %}
-        {% if messages %}
-          <ul class=flashes>
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-          </ul>
-        {% endif %}
-      {% endwith %}
-
-      <ul>
-        <li><a href="{{ url_for('events_index') }}">List events</a></li>
-        <li><a href="{{ url_for('events_form') }}">Add an event</a></li>
-        <li><a href="{{ url_for('absences_index') }}">List absences</a></li>
-        <li><a href="{{ url_for('absences_form') }}">Add an absence</a></li>
-        <li><a href="{{ url_for('instruments_index') }}">List instruments</a></li>
-        <li><a href="{{ url_for('instruments_form') }}">Add an instrument</a></li>
+    </div>
+</nav>
+<main role="main" class="container">
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+      <ul class=flashes>
+          {% for message in messages %}
+            <li>{{ message }}</li>
+          {% endfor %}
       </ul>
-      {% block body %}
-        <p>
+      {% endif %}
+    {% endwith %}
+    {% block body %}
+      <p>
           Content.
-        </p>
-      {% endblock %}
-    </main>
+      </p>
+    {% endblock %}
+</main>
 
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  </body>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+</body>
 </html>

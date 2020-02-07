@@ -9,8 +9,11 @@ from flask_sqlalchemy import SQLAlchemy
 
 import os
 
+print("initializing db")
+
 if os.environ.get("HEROKU"):
     app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
+    print("HEROKU parameter ok")
 else:
     app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///orchestime.db"
     app.config["SQLALCHEMY_ECHO"] = True
