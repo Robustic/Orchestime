@@ -12,7 +12,7 @@ absence_event = db.Table('absence_event',
 
 class Event(Base):
     name = db.Column(db.String(144), nullable=False)
-    description = db.Column(db.Text(10000))
+    description = db.Column(db.String(1000))
     date_start = db.Column(db.DateTime, nullable=False)
     date_end = db.Column(db.DateTime, nullable=False)
 
