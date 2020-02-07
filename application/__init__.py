@@ -54,11 +54,11 @@ except:
     pass
     print("***Error, database not created. ***")
 
-Model.account.create(db.session.bind, checkfirst=True)
-Model.instrument.create(db.session.bind, checkfirst=True)
-Model.absence.create(db.session.bind, checkfirst=True)
-Model.event.create(db.session.bind, checkfirst=True)
-Model.absence_event.create(db.session.bind, checkfirst=True)
+# Model.account.create(db.session.bind, checkfirst=True)
+# Model.instrument.create(db.session.bind, checkfirst=True)
+# Model.absence.create(db.session.bind, checkfirst=True)
+# Model.event.create(db.session.bind, checkfirst=True)
+# Model.absence_event.create(db.session.bind, checkfirst=True)
 
 if not Instrument.query.filter_by(name="Instrument not selected").first():
     instr = Instrument("Instrument not selected")
