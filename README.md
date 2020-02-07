@@ -4,7 +4,7 @@ Orchestime on Tietokantasovellus -harjoitustyökurssin 2020 kevät aikana muodos
 
 ## Heroku linkki
 
-Heroku linkki: [Orchestime](https://orchestime.herokuapp.com/instruments)
+Heroku linkki: [Orchestime](https://orchestime.herokuapp.com/)
 
 Testitunnukset Herokuun kirjautumista varten:
 
