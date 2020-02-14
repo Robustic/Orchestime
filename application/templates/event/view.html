@@ -35,8 +35,10 @@
             <td>{{ notavailable.account_name }}</td>
             <td>{{ notavailable.absence_name }}</td>
             <td>{{ notavailable.absence_description }}</td>
-            <td>{{ notavailable.absence_date_start }}</td>
-            <td>{{ notavailable.absence_date_end }}</td>
+            {% set start = notavailable.absence_date_start|string %}
+            <td>{{ start[0:10] }}</td>
+            {% set end = notavailable.absence_date_end|string %}
+            <td>{{ end[0:10] }}</td>
         </tr>
         {% endfor %}
     </tbody>

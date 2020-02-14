@@ -18,8 +18,10 @@
             <td>{{ event.event_name }}</td>
             <td>{{ event.event_description }}</td>
             <td>{{ event.count_names }}</td>
-            <td>{{ event.event_date_start }}</td>
-            <td>{{ event.event_date_end }}</td>
+            {% set start = event.event_date_start|string %}
+            <td>{{ start[0:10] }}</td>
+            {% set end = event.event_date_end|string %}
+            <td>{{ end[0:10] }}</td>
             <td><a href="{{ url_for('event_view', event_id=event.event_id) }}">View event details</a></td>
         </tr>
     </tbody>
