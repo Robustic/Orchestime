@@ -6,6 +6,7 @@
         <tr>
             <th>Event</th>
             <th>Description</th>
+            <th>Number of absents</th>
             <th>Start date</th>
             <th>End date</th>
             <th>Details</th>
@@ -14,11 +15,12 @@
     {% for event in events %}
     <tbody>
         <tr>
-            <td>{{ event.name }}</td>
-            <td>{{ event.description }}</td>
-            <td>{{ event.date_start.strftime('%Y-%m-%d') }}</td>
-            <td>{{ event.date_end.strftime('%Y-%m-%d') }}</td>
-            <td><a href="{{ url_for('event_view', event_id=event.id) }}">View event details</a></td>
+            <td>{{ event.event_name }}</td>
+            <td>{{ event.event_description }}</td>
+            <td>{{ event.count_names }}</td>
+            <td>{{ event.event_date_start }}</td>
+            <td>{{ event.event_date_end }}</td>
+            <td><a href="{{ url_for('event_view', event_id=event.event_id) }}">View event details</a></td>
         </tr>
     </tbody>
     {% endfor %}

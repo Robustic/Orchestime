@@ -5,6 +5,7 @@ from application import app, db, bcrypt, login_manager
 from application.instrument.models import Instrument
 from application.auth.models import User
 from application.auth.forms import LoginForm, NewaccountForm, UpdateaccountForm
+from application.event.models import Event
 
 
 @app.route("/auth/new")
@@ -22,6 +23,15 @@ def auth_create():
     db.session().add(account)
     db.session().commit()
     return redirect(url_for("auth_form"))
+
+
+@app.route("/auth/<auth_id>/absences", methods=["GET"])
+@login_required
+def auth_view_my_absences(auth_id):
+    if int(auth_id) != current_user.id:
+        return login_manager.unauthorized()
+    account = User.query.get(auth_id)
+    return render_template("auth/viewmyabsences.html", account=account, absences=Event.find_all_absents_for_user(account.id))
 
 
 @app.route("/auth/<auth_id>/", methods=["GET"])

@@ -33,6 +33,22 @@ class Event(Base):
         return db.engine.execute(stmt)
 
     @staticmethod
+    def find_events():
+        stmt = text("SELECT Event.name as event_name,"
+                    " Event.description as event_description,"
+                    " Event.date_start as event_date_start,"
+                    " Event.date_end as event_date_end,"
+                    " Event.id as event_id,"
+                    " COUNT(DISTINCT Account.id) as count_names"
+                    " FROM Event"
+                    " LEFT JOIN absence_event ON Event.id = absence_event.event_id"
+                    " LEFT JOIN Absence ON Absence.id = absence_event.absence_id"
+                    " LEFT JOIN account ON account.id = Absence.account_id"
+                    " GROUP BY Event.id"
+                    " ORDER BY event_name")
+        return db.engine.execute(stmt)
+
+    @staticmethod
     def find_absent_users_for_event(event_id):
         stmt = text("SELECT account.name as account_name,"
                     " Absence.name as absence_name,"
@@ -43,6 +59,25 @@ class Event(Base):
                     " LEFT JOIN absence_event ON Event.id = absence_event.event_id"
                     " LEFT JOIN Absence ON Absence.id = absence_event.absence_id"
                     " LEFT JOIN account ON account.id = Absence.account_id"
-                    " WHERE (Event.id = :x)")
+                    " WHERE (Event.id = :x)"
+                    " ORDER BY account_name, absence_date_start, absence_date_end")
         stmt = stmt.bindparams(x=event_id)
+        return db.engine.execute(stmt)
+
+    @staticmethod
+    def find_all_absents_for_user(user_id):
+        stmt = text("SELECT Event.name as event_name,"
+                    " Event.date_start as event_date_start,"
+                    " Event.date_end as event_date_end,"
+                    " Absence.name as absence_name,"
+                    " Absence.description as absence_description,"
+                    " Absence.date_start as absence_date_start,"
+                    " Absence.date_end as absence_date_end"
+                    " FROM Absence"
+                    " LEFT JOIN absence_event ON Absence.id = absence_event.absence_id"
+                    " LEFT JOIN Event ON Event.id = absence_event.event_id"                    
+                    " LEFT JOIN account ON account.id = Absence.account_id"
+                    " WHERE (account.id = :x)"
+                    " ORDER BY event_name, event_date_start, event_date_end, absence_date_start, absence_date_end")
+        stmt = stmt.bindparams(x=user_id)
         return db.engine.execute(stmt)

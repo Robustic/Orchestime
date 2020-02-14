@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<h3>Absences of {{ account.name }}</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Name of the event</th>
+            <th>Event start date</th>
+            <th>Event end date</th>
+            <th>Absence</th>
+            <th>Description</th>
+            <th>Absence start date</th>
+            <th>Absence end date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for absence in absences %}
+        <tr>
+            <td>{{ absence.event_name }}</td>
+            <td>{{ absence.event_date_start }}</td>
+            <td>{{ absence.event_date_end }}</td>
+            <td>{{ absence.absence_name }}</td>
+            <td>{{ absence.absence_description }}</td>
+            <td>{{ absence.absence_date_start }}</td>
+            <td>{{ absence.absence_date_end }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

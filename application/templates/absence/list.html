@@ -4,8 +4,8 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Absence</th>
             <th>Who is absent</th>
+            <th>Absence</th>
             <th>Description</th>
             <th>Start date</th>
             <th>End date</th>
@@ -14,8 +14,8 @@
     {% for absence in absences %}
     <tbody>
         <tr>
-            <td>{{ absence.name }}</td>
             <td>{{ absence.account.name }}</td>
+            <td>{{ absence.name }}</td>
             <td>{{ absence.description }}</td>
             <td>{{ absence.date_start.strftime('%Y-%m-%d') }}</td>
             <td>{{ absence.date_end.strftime('%Y-%m-%d') }}</td>

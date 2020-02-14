@@ -11,7 +11,7 @@ from application.absence.forms import AbsenceForm
 
 @app.route("/absence", methods=["GET"])
 def absences_index():
-    return render_template("absence/list.html", absences=Absence.query.join(User).all())
+    return render_template("absence/list.html", absences=Absence.query.join(User).order_by(User.name))
 
 
 @app.route("/absence/new/")

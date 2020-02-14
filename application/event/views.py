@@ -11,7 +11,8 @@ from application.absence.models import Absence
 
 @app.route("/event", methods=["GET"])
 def events_index():
-    return render_template("event/list.html", events=Event.query.all())
+    events = Event.find_events()
+    return render_template("event/list.html", events=events)
 
 
 @app.route("/event/<event_id>/", methods=["GET"])
