@@ -18,12 +18,24 @@
         {% for absence in absences %}
         <tr>
             <td>{{ absence.event_name }}</td>
-            <td>{{ absence.event_date_start }}</td>
-            <td>{{ absence.event_date_end }}</td>
+            {% set event_start = absence.event_date_start|string %}
+            {% if event_start|length > 4 %}
+                <td>{{ event_start[0:10] }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            {% set event_end = absence.event_date_end|string %}
+            {% if event_end|length > 4 %}
+                <td>{{ event_end[0:10] }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
             <td>{{ absence.absence_name }}</td>
             <td>{{ absence.absence_description }}</td>
-            <td>{{ absence.absence_date_start }}</td>
-            <td>{{ absence.absence_date_end }}</td>
+            {% set absence_start = absence.absence_date_start|string %}
+            <td>{{ absence_start[0:10] }}</td>
+            {% set absence_end = absence.absence_date_end|string %}
+            <td>{{ absence_end[0:10] }}</td>
         </tr>
         {% endfor %}
     </tbody>

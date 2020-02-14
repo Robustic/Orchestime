@@ -12,6 +12,26 @@ username: testikayttaja
 
 password: r5testAilija.Mpw93
 
+## Asennusohje paikalliselle koneelle
+
+* Tarkista, että koneellesi on asennettu Python 3
+
+* Kloonaa tämä GitHub-repositorio koneellesi
+
+* Siirry komentorivillä repositoriohakemiston juureen, eli hakemistoon missä näkyy mm. README.md ja requirements.txt tiedostot
+
+* Kirjoita komentoriville `pip install -r requirements.txt`, mikä päivittää projektiin liittyvät riippuvuudet
+
+* Aktivoi virtuaaliympäristö kirjoitamalla komentoriville `source venv/bin/activate`
+
+* Aloita ohjelman suoritus kirjoittamalla komentoriville `python3 run.py`
+
+* Avaa nettiselain ja mene osoitteeseen [http://localhost:5000/](http://localhost:5000/)
+
+## Käyttöohje
+
+
+
 ## User storyt
 
 [User storyt](https://github.com/Robustic/Orchestime/tree/master/documentation/userstories.md)
