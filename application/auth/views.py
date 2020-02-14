@@ -1,7 +1,7 @@
 from flask import redirect, render_template, request, url_for
-from flask_login import login_required, login_user, logout_user
+from flask_login import login_required, login_user, logout_user, current_user
 
-from application import app, db, bcrypt
+from application import app, db, bcrypt, login_manager
 from application.instrument.models import Instrument
 from application.auth.models import User
 from application.auth.forms import LoginForm, NewaccountForm, UpdateaccountForm
@@ -27,6 +27,8 @@ def auth_create():
 @app.route("/auth/<auth_id>/", methods=["GET"])
 @login_required
 def auth_view(auth_id):
+    if int(auth_id) != current_user.id:
+        return login_manager.unauthorized()
     account = User.query.get(auth_id)
     return render_template("auth/update.html", account=account,
                            instrument=Instrument.query.get(account.instrument_id), form=UpdateaccountForm())
@@ -35,6 +37,8 @@ def auth_view(auth_id):
 @app.route("/auth/<auth_id>/update/", methods=["POST"])
 @login_required
 def auth_update(auth_id):
+    if int(auth_id) != current_user.id:
+        return login_manager.unauthorized()
     form = UpdateaccountForm(request.form)
     account = User.query.get(auth_id)
     form.instrument_id.data = int(form.instrument_id.data[0])
