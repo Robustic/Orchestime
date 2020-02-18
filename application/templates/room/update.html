@@ -1,11 +1,11 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<form method="POST" action="{{ url_for('auth_update', auth_id=current_user.id) }}">
+<form method="POST" action="{{ url_for('room_update', room_id=room.id) }}">
     <table>
         <tr>
             <td>
-                <b>Old name: {{ current_user.name }}</b>
+                Old name of the room: {{ room.name }}
             </td>
         </tr>
         <tr>
@@ -27,30 +27,39 @@
         </tr>
         <tr>
             <td>
-                <b>Old instrument: {{ oldinstrument.name }}</b>
+                Old place of the room: {{ oldplace.name }}
             </td>
         </tr>
         <tr>
             <td>
-                Select new instrument
+                Select new place
             </td>
             <td>
-                <select name="instrument_id">
-                    {% for instrument in instruments %}
-                        <option value="{{ instrument.id }}"
-                                {% if instrument.id==oldinstrument.id %}
+                <select name="place_id">
+                    {% for place in places %}
+                        <option value="{{ place.id }}"
+                                {% if place.id==oldplace.id %}
                                   selected="selected"
                                 {% endif %}
-                        >{{ instrument.name }}</option>
+                        >{{ place.name }}</option>
                     {% endfor %}
                 </select>
             </td>
         </tr>
         <tr>
             <td colspan="2">
-                <input type="submit" value="Update name and instrument"/>
+                <input type="submit" value="Update room name and/or place"/>
             </td>
         </tr>
     </table>
 </form>
+<table>
+    <tr>
+        <td>
+            <form method="POST" action="{{ url_for('room_delete', room_id=room.id) }}">
+                <input type="submit" value="Delete room"/>
+            </form>
+        <td>
+    </tr>
+</table>
 {% endblock %}

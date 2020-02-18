@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('place_create') }}">
+    <table>
+        <tr>
+            <td>
+                {{ form.name.label }}
+            </td>
+            <td>
+                {{ form.name }}
+            </td>
+            <td>
+                <ul>
+                    {% for nameerror in form.name.errors %}
+                    <li>
+                        {{ nameerror }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.address.label }}
+            </td>
+            <td>
+                {{ form.address }}
+            </td>
+            <td>
+                <ul>
+                    {% for addresserror in form.address.errors %}
+                    <li>
+                        {{ addresserror }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Add a new place"/>
+            </td>
+        </tr>
+    </table>
+</form>
+{% endblock %}

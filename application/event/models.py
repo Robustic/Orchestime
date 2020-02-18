@@ -16,6 +16,7 @@ class Event(Base):
     date_start = db.Column(db.DateTime, nullable=False)
     date_end = db.Column(db.DateTime, nullable=False)
 
+    room_id = db.Column(db.Integer, db.ForeignKey('room.id'))
     absence_events = db.relationship('Absence', secondary=absence_event, backref='event')
 
     def __init__(self, name, description, date_start, date_end):
@@ -39,11 +40,15 @@ class Event(Base):
                     " Event.date_start as event_date_start,"
                     " Event.date_end as event_date_end,"
                     " Event.id as event_id,"
+                    " Place.name as place_name,"
+                    " Room.name as room_name,"
                     " COUNT(DISTINCT Account.id) as count_names"
                     " FROM Event"
                     " LEFT JOIN absence_event ON Event.id = absence_event.event_id"
                     " LEFT JOIN Absence ON Absence.id = absence_event.absence_id"
                     " LEFT JOIN account ON account.id = Absence.account_id"
+                    " LEFT JOIN Room ON Room.id = Event.room_id"
+                    " LEFT JOIN Place ON Place.id = Room.place_id"
                     " GROUP BY Event.id"
                     " ORDER BY event_name")
         return db.engine.execute(stmt)

@@ -1,6 +1,8 @@
 from application import db
 from application.models import Base
 
+from sqlalchemy.sql import text
+
 
 class User(Base):
 
@@ -29,3 +31,14 @@ class User(Base):
 
     def is_authenticated(self):
         return True
+
+    @staticmethod
+    def participation_percent_for_events(account_id):
+        stmt = text("SELECT account.id AS account_id, 100 - COUNT(DISTINCT Event.id) * 100 / (SELECT COUNT(*) FROM Event) as count_events"
+                    " FROM account"
+                    " LEFT JOIN Absence ON account.id = Absence.account_id"
+                    " LEFT JOIN absence_event ON Absence.id = absence_event.absence_id"
+                    " LEFT JOIN Event ON Event.id = absence_event.event_id"
+                    " WHERE (account_id = :x)")
+        stmt = stmt.bindparams(x=account_id)
+        return db.engine.execute(stmt)

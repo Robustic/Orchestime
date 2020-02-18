@@ -1,0 +1,66 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<form method="POST" action="{{ url_for('place_update', place_id=place.id) }}">
+    <table>
+        <tr>
+            <td>
+                <b>{{ place.name }}</b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.name.label }}
+            </td>
+            <td>
+                {{ form.name }}
+            </td>
+            <td>
+                <ul>
+                    {% for placeerror in form.name.errors %}
+                    <li>
+                        {{ placeerror }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <b>{{ place.address }}</b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.address.label }}
+            </td>
+            <td>
+                {{ form.address }}
+            </td>
+            <td>
+                <ul>
+                    {% for addresserror in form.address.errors %}
+                    <li>
+                        {{ addresserror }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Update place name and/or place address"/>
+            </td>
+        </tr>
+    </table>
+</form>
+<table>
+    <tr>
+        <td>
+            <form method="POST" action="{{ url_for('place_delete', place_id=place.id) }}">
+                <input type="submit" value="Delete place"/>
+            </form>
+        <td>
+    </tr>
+</table>
+{% endblock %}

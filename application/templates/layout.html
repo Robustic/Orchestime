@@ -64,6 +64,22 @@
                     <a class="nav-link" href="{{ url_for('instruments_form') }}">Add an instrument</a>
                 </li>
             {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('place_index') }}">List places</a>
+            </li>
+            {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('place_form') }}">Add a place</a>
+                </li>
+            {% endif %}
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('room_index') }}">List rooms</a>
+            </li>
+            {% if current_user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ url_for('room_form') }}">Add a room</a>
+                </li>
+            {% endif %}
         </ul>
     </div>
 </nav>

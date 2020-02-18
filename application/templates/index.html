@@ -1,7 +1,10 @@
 {% extends "layout.html" %}
 
 {% block body %}
-  <p>
-    Welcome to the Orchestime!
-  </p>
+    {% if message %}
+        {{ message }}
+    {% endif %}
+    <p>
+        Welcome to the Orchestime!
+    </p>
 {% endblock %}

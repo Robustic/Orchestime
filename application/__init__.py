@@ -31,6 +31,8 @@ from application.auth.models import User
 from application.absence.models import Absence
 from application.event.models import Event
 from application.event.models import absence_event
+from application.place.models import Place
+from application.room.models import Room
 
 from os import urandom
 app.config["SECRET_KEY"] = urandom(32)
@@ -52,21 +54,12 @@ try:
     db.create_all()
 except:
     pass
-    print("***Error, database not created. ***")
-
-# Model.account.create(db.session.bind, checkfirst=True)
-# Model.instrument.create(db.session.bind, checkfirst=True)
-# Model.absence.create(db.session.bind, checkfirst=True)
-# Model.event.create(db.session.bind, checkfirst=True)
-# Model.absence_event.create(db.session.bind, checkfirst=True)
-
-if not Instrument.query.filter_by(name="Instrument not selected").first():
-    instr = Instrument("Instrument not selected")
-    db.session().add(instr)
-    db.session().commit()
+    print("*** Error, database not created. ***")
 
 from application import views
 from application.instrument import views
 from application.absence import views
 from application.event import views
 from application.auth import views
+from application.place import views
+from application.room import views

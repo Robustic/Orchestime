@@ -6,6 +6,9 @@
         <tr>
             <th>Event</th>
             <th>Description</th>
+            <th>Place</th>
+            <th>Address</th>
+            <th>Room</th>
             <th>Start date</th>
             <th>End date</th>
         </tr>
@@ -14,6 +17,21 @@
         <tr>
             <td>{{ event.name }}</td>
             <td>{{ event.description }}</td>
+            {% if event.Room.name %}
+                {% if event.Room.Place.name %}
+                    <td>{{ event.Room.Place.name }}</td>
+                    <td>{{ event.Room.Place.address }}</td>
+                    <td>{{ event.Room.name }}</td>
+                {% else %}
+                    <td>-</td>
+                    <td>-</td>
+                    <td>{{ event.Room.name }}</td>
+                {% endif %}
+            {% else %}
+                <td>-</td>
+                <td>-</td>
+                <td>-</td>
+            {% endif %}
             <td>{{ event.date_start.strftime('%Y-%m-%d') }}</td>
             <td>{{ event.date_end.strftime('%Y-%m-%d') }}</td>
         </tr>

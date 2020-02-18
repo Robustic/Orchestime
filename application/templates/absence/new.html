@@ -3,6 +3,9 @@
 {% block body %}
 <form method="POST" action="{{ url_for('absences_create') }}">
     <table>
+        {% if message %}
+            {{ message }}
+        {% endif %}
         <tr>
             <td>
                 {{ form.name.label }}

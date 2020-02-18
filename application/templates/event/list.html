@@ -6,6 +6,8 @@
         <tr>
             <th>Event</th>
             <th>Description</th>
+            <th>Place</th>
+            <th>Room</th>
             <th>Number of absents</th>
             <th>Start date</th>
             <th>End date</th>
@@ -17,6 +19,16 @@
         <tr>
             <td>{{ event.event_name }}</td>
             <td>{{ event.event_description }}</td>
+            {% if event.place_name %}
+                <td>{{ event.place_name }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
+            {% if event.room_name %}
+                <td>{{ event.room_name }}</td>
+            {% else %}
+                <td>-</td>
+            {% endif %}
             <td>{{ event.count_names }}</td>
             {% set start = event.event_date_start|string %}
             <td>{{ start[0:10] }}</td>

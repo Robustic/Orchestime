@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Place</th>
+            <th>Address</th>
+            {% if current_user.is_authenticated %}
+                <th>Update</th>
+            {% endif %}
+        </tr>
+    </thead>
+    {% for place in places %}
+    <tbody>
+        <tr>
+            <td>{{ place.name }}</td>
+            <td>{{ place.address }}</td>
+            {% if current_user.is_authenticated %}
+                <td><a href="{{ url_for('place_view', place_id=place.id) }}">Update place</a></td>
+            {% endif %}
+      </tr>
+    </tbody>
+    {% endfor %}
+</table>
+{% endblock %}

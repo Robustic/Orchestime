@@ -15,12 +15,6 @@ class NewaccountForm(FlaskForm):
 class UpdateaccountForm(FlaskForm):
     name = StringField("Name", [validators.Length(min=2, max=140)])
 
-    instrumentList = []
-    instruments = Instrument.query.all()
-    for instrument in instruments:
-        instrumentList.append((instrument.id, instrument.name))
-    instrument_id = SelectField('Instrument', choices=instrumentList)
-
     class Meta:
         csrf = False
 

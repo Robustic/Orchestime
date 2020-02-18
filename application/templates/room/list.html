@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+
+{% block body %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Place</th>
+            <th>Room</th>
+            {% if current_user.is_authenticated %}
+                <th>Update</th>
+            {% endif %}
+        </tr>
+    </thead>
+    {% for room in rooms %}
+        <tbody>
+            <tr>
+                <td>{{ room.Place.name }}</td>
+                <td>{{ room.name }}</td>
+                {% if current_user.is_authenticated %}
+                    <td><a href="{{ url_for('room_view', room_id=room.id) }}">Update room</a></td>
+                {% endif %}
+            </tr>
+        </tbody>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -24,6 +24,8 @@ def absences_form():
 @login_required
 def absences_create():
     form = AbsenceForm(request.form)
+    if form.date_start.data > form.date_end.data:
+        return render_template("absence/new.html", form=form, message="Start date should be before end date.")
     if not form.validate():
         return render_template("absence/new.html", form=form)
 

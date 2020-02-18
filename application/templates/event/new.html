@@ -3,6 +3,9 @@
 {% block body %}
 <form method="POST" action="{{ url_for('events_create') }}">
     <table>
+        {% if message %}
+            {{ message }}
+        {% endif %}
         <tr>
             <td>
                 {{ form.name.label }}
@@ -60,6 +63,18 @@
                     </li>
                     {% endfor %}
                 </ul>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                Room of the event
+            </td>
+            <td>
+                <select name="room_id">
+                    {% for room in rooms %}
+                        <option value="{{ room.id }}">{{ room.name }}</option>
+                    {% endfor %}
+                </select>
             </td>
         </tr>
         <tr>
