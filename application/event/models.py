@@ -34,7 +34,7 @@ class Event(Base):
         return db.engine.execute(stmt)
 
     @staticmethod
-    def find_events():
+    def find_events(offset, size):
         stmt = text("SELECT Event.name AS event_name,"
                     " Event.description AS event_description,"
                     " Event.date_start AS event_date_start,"
@@ -50,11 +50,14 @@ class Event(Base):
                     " LEFT JOIN Room ON Room.id = Event.room_id"
                     " LEFT JOIN Place ON Place.id = Room.place_id"
                     " GROUP BY Event.id, Room.name, Place.name"
-                    " ORDER BY event_name")
+                    " ORDER BY event_date_start, event_date_end, event_name"
+                    " LIMIT :size"
+                    " OFFSET :offset")
+        stmt = stmt.bindparams(offset=offset, size=size)
         return db.engine.execute(stmt)
 
     @staticmethod
-    def find_absent_users_for_event(event_id):
+    def find_absent_users_for_event(event_id, offset, size):
         stmt = text("SELECT account.name AS account_name,"
                     " Absence.name AS absence_name,"
                     " Absence.description AS absence_description,"
@@ -65,12 +68,14 @@ class Event(Base):
                     " LEFT JOIN Absence ON Absence.id = absence_event.absence_id"
                     " LEFT JOIN account ON account.id = Absence.account_id"
                     " WHERE (Event.id = :x)"
-                    " ORDER BY account_name, absence_date_start, absence_date_end")
-        stmt = stmt.bindparams(x=event_id)
+                    " ORDER BY account_name, absence_date_start, absence_date_end"
+                    " LIMIT :size"
+                    " OFFSET :offset")
+        stmt = stmt.bindparams(x=event_id, offset=offset, size=size)
         return db.engine.execute(stmt)
 
     @staticmethod
-    def find_all_absents_for_user(user_id):
+    def find_all_absents_for_user(user_id, offset, size):
         stmt = text("SELECT Event.name AS event_name,"
                     " Event.date_start AS event_date_start,"
                     " Event.date_end AS event_date_end,"
@@ -83,6 +88,8 @@ class Event(Base):
                     " LEFT JOIN Event ON Event.id = absence_event.event_id"                    
                     " LEFT JOIN account ON account.id = Absence.account_id"
                     " WHERE (account.id = :x)"
-                    " ORDER BY event_name, event_date_start, event_date_end, absence_date_start, absence_date_end")
-        stmt = stmt.bindparams(x=user_id)
+                    " ORDER BY event_name, event_date_start, event_date_end, absence_date_start, absence_date_end"
+                    " LIMIT :size"
+                    " OFFSET :offset")
+        stmt = stmt.bindparams(x=user_id, offset=offset, size=size)
         return db.engine.execute(stmt)

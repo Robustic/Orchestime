@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<h3>Update place</h3>
 <form method="POST" action="{{ url_for('place_update', place_id=place.id) }}">
     <table>
         <tr>

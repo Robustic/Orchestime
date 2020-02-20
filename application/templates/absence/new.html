@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<h3>New Absence</h3>
 <form method="POST" action="{{ url_for('absences_create') }}">
     <table>
         {% if message %}

@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<h3>Instruments</h3>
+{{ pagination.info }}
+{{ pagination.links }}
 <table class="table">
     <thead>
         <tr>
@@ -21,4 +24,5 @@
     </tbody>
     {% endfor %}
 </table>
+{{ pagination.links }}
 {% endblock %}

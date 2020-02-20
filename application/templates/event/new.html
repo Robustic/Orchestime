@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<h3>New event</h3>
 <form method="POST" action="{{ url_for('events_create') }}">
     <table>
         {% if message %}

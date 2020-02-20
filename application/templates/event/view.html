@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<h3>Event details</h3>
 <table class="table">
     <thead>
         <tr>
@@ -37,6 +38,8 @@
         </tr>
     </tbody>
 </table>
+{{ pagination.info }}
+{{ pagination.links }}
 <table class="table">
     <thead>
         <tr>
@@ -61,4 +64,5 @@
         {% endfor %}
     </tbody>
 </table>
+{{ pagination.links }}
 {% endblock %}

@@ -1,12 +1,13 @@
 from flask import redirect, render_template, request, url_for
 from flask_login import login_required, login_user, logout_user, current_user
 
-from application import app, db, bcrypt, login_manager
+from application import app, db, bcrypt, login_manager, get_css_framework, ITEMS_PER_PAGE
 from application.instrument.models import Instrument
 from application.auth.models import User
 from application.auth.forms import LoginForm, NewaccountForm, UpdateaccountForm
 from application.event.models import Event, absence_event
 from application.absence.models import Absence
+from flask_paginate import Pagination, get_page_parameter
 
 
 @app.route("/auth/new")
@@ -34,18 +35,28 @@ def auth_view_my_absences(auth_id):
     if int(auth_id) != current_user.id:
         return login_manager.unauthorized()
     accountnow = User.query.get(auth_id)
-    absenceforevents = User.query.join(Absence).join(absence_event).join(Event)\
-        .filter(Absence.account_id == accountnow.id).all()
+
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+
+    total = User.query.join(Absence).join(absence_event).join(Event) \
+        .filter(Absence.account_id == accountnow.id).count()
+    absences = Event.find_all_absents_for_user(accountnow.id, (page - 1) * ITEMS_PER_PAGE, ITEMS_PER_PAGE)
+    pagination = Pagination(page=page, total=total, search=search, record_name='absences', per_page=ITEMS_PER_PAGE,
+                            css_framework=get_css_framework(), format_total=True, format_number=True)
+
     participation = 100
-    if Event.query.count() > 0 and len(absenceforevents) > 0:
+    if Event.query.count() > 0 and total > 0:
         participation_percent_list = []
         for participation_percent in User.participation_percent_for_events(accountnow.id):
             participation_percent_list.append(participation_percent)
         participation = participation_percent_list[0].count_events
 
-    return render_template("auth/viewmyabsences.html", account=accountnow,
-                           participation=participation,
-                           absences=Event.find_all_absents_for_user(accountnow.id))
+    return render_template("auth/viewmyabsences.html", account=accountnow, participation=participation,
+                           absences=absences, pagination=pagination)
 
 
 @app.route("/auth/<auth_id>/", methods=["GET"])

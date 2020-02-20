@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 
 {% block body %}
+<h3>Update account</h3>
 <form method="POST" action="{{ url_for('auth_update', auth_id=current_user.id) }}">
     <table>
         <tr>

@@ -54,7 +54,7 @@ def get_css_framework():
     return current_app.config.get('bootstrap3', 'bootstrap4')
 
 
-ITEMS_PER_PAGE = 10
+ITEMS_PER_PAGE = 5
 
 try:
     db.create_all()

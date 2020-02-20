@@ -1,15 +1,28 @@
 from flask import redirect, render_template, request, url_for
 from flask_login import login_required
 
-from application import app, db
+from application import app, db, get_css_framework, ITEMS_PER_PAGE
 from application.place.models import Place
 from application.place.forms import PlaceForm
 from application.place.forms import PlaceUpdateForm
+from flask_paginate import Pagination, get_page_parameter
 
 
 @app.route("/place", methods=["GET"])
 def place_index():
-    return render_template("place/list.html", places=Place.query.order_by(Place.name).all())
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+
+    total = Place.query.count()
+    places = Place.query.order_by(Place.name)\
+        .slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE)
+    pagination = Pagination(page=page, total=total, search=search, record_name='places', per_page=ITEMS_PER_PAGE,
+                            css_framework=get_css_framework(), format_total=True, format_number=True)
+
+    return render_template("place/list.html", places=places, pagination=pagination)
 
 
 @app.route("/place/new/")
