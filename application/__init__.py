@@ -1,4 +1,4 @@
-from flask import Flask
+from flask import Flask, current_app
 app = Flask(__name__)
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -49,6 +49,12 @@ login_manager.login_view = "auth_login"
 def load_user(user_id):
     return User.query.get(user_id)
 
+
+def get_css_framework():
+    return current_app.config.get('bootstrap3', 'bootstrap4')
+
+
+ITEMS_PER_PAGE = 10
 
 try:
     db.create_all()

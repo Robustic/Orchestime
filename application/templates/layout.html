@@ -19,84 +19,85 @@
     <div class="collapse navbar-collapse" id="navbarCollapse">
         <ul class="navbar-nav mr-auto">
             {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link"> (Logged in as "{{ current_user.name }}")</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('auth_logout') }}">Logout</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('auth_view', auth_id=current_user.id) }}">Update name or instrument
-                        of the user &nbsp;&nbsp;</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link"> (Logged in as "{{ current_user.name }}")</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth_logout') }}">Logout</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth_view', auth_id=current_user.id) }}">Update name or instrument
+                    of the user &nbsp;&nbsp;</a>
+            </li>
             {% else %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('auth_login') }}">Log in</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('auth_form') }}">Register</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth_login') }}">Log in</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth_form') }}">Register</a>
+            </li>
             {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('events_index') }}">List events</a>
             </li>
             {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('events_form') }}">Add an event</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('events_form') }}">Add an event</a>
+            </li>
             {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('absences_index') }}">List absences</a>
             </li>
             {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('absences_form') }}">Add an absence</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('auth_view_my_absences', auth_id=current_user.id) }}">View my absences</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('absences_form') }}">Add an absence</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('auth_view_my_absences', auth_id=current_user.id) }}">View my
+                    absences</a>
+            </li>
             {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('instruments_index') }}">List instruments</a>
             </li>
             {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('instruments_form') }}">Add an instrument</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('instruments_form') }}">Add an instrument</a>
+            </li>
             {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('place_index') }}">List places</a>
             </li>
             {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('place_form') }}">Add a place</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('place_form') }}">Add a place</a>
+            </li>
             {% endif %}
             <li class="nav-item">
                 <a class="nav-link" href="{{ url_for('room_index') }}">List rooms</a>
             </li>
             {% if current_user.is_authenticated %}
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('room_form') }}">Add a room</a>
-                </li>
+            <li class="nav-item">
+                <a class="nav-link" href="{{ url_for('room_form') }}">Add a room</a>
+            </li>
             {% endif %}
         </ul>
     </div>
 </nav>
 <main role="main" class="container">
     {% with messages = get_flashed_messages() %}
-      {% if messages %}
-      <ul class=flashes>
-          {% for message in messages %}
-            <li>{{ message }}</li>
-          {% endfor %}
-      </ul>
-      {% endif %}
+    {% if messages %}
+    <ul class=flashes>
+        {% for message in messages %}
+        <li>{{ message }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
     {% endwith %}
     {% block body %}
-      <p>
-          Content.
-      </p>
+    <p>
+        Content.
+    </p>
     {% endblock %}
 </main>
 

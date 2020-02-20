@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 
 {% block body %}
-{% for partic in participation %}
-    <p>My participation percent is {{ partic.count_events }} %.</p>
-{% endfor %}
+{% if participation %}
+    <p>My participation percent is {{ participation }} %.</p>
+{% endif %}
 <h3>Absences of {{ account.name }}</h3>
 <table class="table">
     <thead>

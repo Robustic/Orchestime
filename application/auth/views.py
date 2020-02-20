@@ -33,10 +33,13 @@ def auth_view_my_absences(auth_id):
     if int(auth_id) != current_user.id:
         return login_manager.unauthorized()
     account = User.query.get(auth_id)
+    participation = 100
     if Event.query.count() > 0:
-        participation = User.participation_percent_for_events(account.id)
-    else:
-        participation = 100
+        participation_percent_list = []
+        for participation_percent in User.participation_percent_for_events(account.id):
+            participation_percent_list.append(participation_percent)
+        participation = participation_percent_list[0].count_events
+
     return render_template("auth/viewmyabsences.html", account=account,
                            participation=participation,
                            absences=Event.find_all_absents_for_user(account.id))

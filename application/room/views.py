@@ -1,17 +1,29 @@
 from flask import redirect, render_template, request, url_for
 from flask_login import login_required
 
-from application import app, db
+from application import app, db, get_css_framework, ITEMS_PER_PAGE
 from application.room.models import Room
 from application.room.forms import RoomForm
 from application.room.forms import RoomUpdateForm
 from application.place.models import Place
+from flask_paginate import Pagination, get_page_parameter
 
 
 @app.route("/room", methods=["GET"])
 def room_index():
-    return render_template("room/list.html", rooms=Room.query.join(Place, isouter=True)
-                           .order_by(Place.name, Room.name).all())
+    search = False
+    q = request.args.get('q')
+    if q:
+        search = True
+    page = request.args.get(get_page_parameter(), type=int, default=1)
+
+    total = Room.query.count()
+    rooms = Room.query.join(Place, isouter=True).order_by(Place.name, Room.name)\
+        .slice((page - 1) * ITEMS_PER_PAGE, page * ITEMS_PER_PAGE)
+    pagination = Pagination(page=page, total=total, search=search, record_name='rooms', per_page=ITEMS_PER_PAGE,
+                            css_framework=get_css_framework(), format_total=True, format_number=True)
+
+    return render_template("room/list.html", rooms=rooms, pagination=pagination)
 
 
 @app.route("/room/new/")
