@@ -89,7 +89,7 @@ CREATE TABLE event (
 )
   ``` 
 
-### absence_event -litostaulu
+### absence_event -liitostaulu
 
   ``` 
 CREATE TABLE absence_event (
