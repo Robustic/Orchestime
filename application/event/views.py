@@ -57,6 +57,12 @@ def events_form():
 def events_create():
     room_id = request.form.get('room_id')
     form = EventForm(request.form)
+    if form.date_start.data is None:
+        return render_template("absence/new.html", form=form, message="Start date should not be empty.",
+                               rooms=Room.query.order_by(Room.name).all())
+    if form.date_end.data is None:
+        return render_template("absence/new.html", form=form, message="End date should not be empty.",
+                               rooms=Room.query.order_by(Room.name).all())
     if form.date_start.data > form.date_end.data:
         return render_template("event/new.html", form=form, message="Start date should be before end date.",
                                rooms=Room.query.order_by(Room.name).all())
