@@ -83,12 +83,12 @@ class Event(Base):
                     " Absence.description AS absence_description,"
                     " Absence.date_start AS absence_date_start,"
                     " Absence.date_end AS absence_date_end"
-                    " FROM Absence"
-                    " LEFT JOIN absence_event ON Absence.id = absence_event.absence_id"
-                    " LEFT JOIN Event ON Event.id = absence_event.event_id"                    
-                    " LEFT JOIN account ON account.id = Absence.account_id"
+                    " FROM account"                    
+                    " JOIN Absence ON account.id = Absence.account_id"
+                    " JOIN absence_event ON Absence.id = absence_event.absence_id"
+                    " JOIN Event ON Event.id = absence_event.event_id"
                     " WHERE (account.id = :x)"
-                    " ORDER BY event_name, event_date_start, event_date_end, absence_date_start, absence_date_end"
+                    " ORDER BY event_date_start, event_date_end, event_name, absence_date_start, absence_date_end"
                     " LIMIT :size"
                     " OFFSET :offset")
         stmt = stmt.bindparams(x=user_id, offset=offset, size=size)

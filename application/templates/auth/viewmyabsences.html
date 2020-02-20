@@ -1,13 +1,14 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h3>My absences</h3>
+<h3>My absences for events</h3>
 {% if participation %}
     <p>My participation percent is {{ participation }} %.</p>
 {% endif %}
 <h3>Absences of {{ account.name }}</h3>
 {{ pagination.info }}
 {{ pagination.links }}
+<p>Listed only my absences which are at same time with orchestra events</p>
 <table class="table">
     <thead>
         <tr>
