@@ -9,7 +9,7 @@ from application.place.forms import PlaceUpdateForm
 
 @app.route("/place", methods=["GET"])
 def place_index():
-    return render_template("place/list.html", places=Place.query.all())
+    return render_template("place/list.html", places=Place.query.order_by(Place.name).all())
 
 
 @app.route("/place/new/")

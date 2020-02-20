@@ -5,7 +5,8 @@ from application import app, db, bcrypt, login_manager
 from application.instrument.models import Instrument
 from application.auth.models import User
 from application.auth.forms import LoginForm, NewaccountForm, UpdateaccountForm
-from application.event.models import Event
+from application.event.models import Event, absence_event
+from application.absence.models import Absence
 
 
 @app.route("/auth/new")
@@ -32,17 +33,19 @@ def auth_create():
 def auth_view_my_absences(auth_id):
     if int(auth_id) != current_user.id:
         return login_manager.unauthorized()
-    account = User.query.get(auth_id)
+    accountnow = User.query.get(auth_id)
+    absenceforevents = User.query.join(Absence).join(absence_event).join(Event)\
+        .filter(Absence.account_id == accountnow.id).all()
     participation = 100
-    if Event.query.count() > 0:
+    if Event.query.count() > 0 and len(absenceforevents) > 0:
         participation_percent_list = []
-        for participation_percent in User.participation_percent_for_events(account.id):
+        for participation_percent in User.participation_percent_for_events(accountnow.id):
             participation_percent_list.append(participation_percent)
         participation = participation_percent_list[0].count_events
 
-    return render_template("auth/viewmyabsences.html", account=account,
+    return render_template("auth/viewmyabsences.html", account=accountnow,
                            participation=participation,
-                           absences=Event.find_all_absents_for_user(account.id))
+                           absences=Event.find_all_absents_for_user(accountnow.id))
 
 
 @app.route("/auth/<auth_id>/", methods=["GET"])
