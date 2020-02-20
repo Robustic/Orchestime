@@ -20,13 +20,17 @@ password: r5testAilija.Mpw93
 
 * Siirry komentorivillä repositoriohakemiston juureen, eli hakemistoon missä näkyy mm. README.md ja requirements.txt tiedostot
 
-* Kirjoita komentoriville `pip install -r requirements.txt`, mikä päivittää projektiin liittyvät riippuvuudet
+* Kirjoita komentoriville `python3 -m venv venv`, joka luo kansioon virtuaaliympäristön
 
 * Aktivoi virtuaaliympäristö kirjoitamalla komentoriville `source venv/bin/activate`
 
+* Kirjoita komentoriville `pip3 install -r requirements.txt`, mikä päivittää projektiin liittyvät riippuvuudet
+
 * Aloita ohjelman suoritus kirjoittamalla komentoriville `python3 run.py`
 
-* Avaa nettiselain ja mene osoitteeseen [http://localhost:5000/](http://localhost:5000/)
+* Avaa nettiselain ja mene osoitteeseen [http://localhost:5000/](http://localhost:5000/), jolloin sovellus aukeaa nettiselaimeen
+
+* Jos asetat projektille uusia riippuvuuksia, päivitä requirements.txt tiedosto kirjoittamalla komentoriville `pip freeze | grep -v pkg-resources > requirements.txt`, jolloin uudet riippuvuudet määrittyvät requirements.txt tiedostoon
 
 ## Käyttöohje
 
