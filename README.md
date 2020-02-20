@@ -92,6 +92,10 @@ Voit päivittää instrumentin valitsemalla *List instruments* näkymässä *Upd
 
 [User storyt](https://github.com/Robustic/Orchestime/tree/master/documentation/userstories.md)
 
+## Tietokantataulujen luontilausekkeet SQL-tietokantaa varten
+
+[Tietokantataulujen luontilausekkeet](https://github.com/Robustic/Orchestime/tree/master/documentation/create_tables.md)
+
 ## Aihekuvaus ja tietokantakaavio
 
 Orchestime -sovelluksen tarkoituksena on toimia orkesterin tapahtumien vuorovaikutteisena kalenterina. Sovelluksen avulla voidaan luoda, lukea, muokata ja poistaa orkesterin toimintaan liittyviä tapahtumia.
