@@ -6,6 +6,7 @@ from application.room.models import Room
 from application.room.forms import RoomForm
 from application.room.forms import RoomUpdateForm
 from application.place.models import Place
+from application.event.models import Event
 from flask_paginate import Pagination, get_page_parameter
 
 

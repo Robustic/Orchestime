@@ -12,9 +12,11 @@ username: testikayttaja
 
 password: r5testAilija.Mpw93
 
-## Asennusohje paikalliselle koneelle
+## Asennusohjeet 
 
-* Tarkista, että koneellesi on asennettu Python 3
+### Asennusohjeet paikalliselle koneelle
+
+* Tarkista, että koneellesi on asennettu Python 3, mieluiten versio Python 3.6.9, jolla ohjelman toiminta on testattu. Asenna tarvittaessa tämä ehdotettu versio.
 
 * Kloonaa tämä GitHub-repositorio koneellesi
 
@@ -31,6 +33,30 @@ password: r5testAilija.Mpw93
 * Avaa nettiselain ja mene osoitteeseen [http://localhost:5000/](http://localhost:5000/), jolloin sovellus aukeaa nettiselaimeen
 
 * Jos asetat projektille uusia riippuvuuksia, päivitä requirements.txt tiedosto kirjoittamalla komentoriville `pip freeze | grep -v pkg-resources > requirements.txt`, jolloin uudet riippuvuudet määrittyvät requirements.txt tiedostoon
+
+### Asennusohjeet sovelluksen asentamisesta Herokuun
+
+* Avaa tili [Herokuun](https://www.heroku.com)
+
+* Siirry komentorivillä repositoriohakemiston juureen, eli hakemistoon missä näkyy mm. README.md ja requirements.txt tiedostot
+
+* Luo uusi Heroku sovellus kirjoittamalla koneesi terminaalin komentoriville `heroku create`
+
+* Aseta Herokuun ympäristömuuttuja kirjoittamalla koneesi terminaalin komentoriville `heroku config:set HEROKU=1`
+
+* Tarkista, onko Herokussa jo tietokanta olemassa kirjoittamalla koneesi terminaalin komentoriville `heroku pg:psql`. Jos saat vastauksen, joka sisältää kohdan `has no databases`, voit lisätä Herokuun uuden tietokannan.
+
+* Lisää Herokuun uusi tietokanta kirjoittamalla koneesi terminaalin komentoriville `heroku addons:add heroku-postgresql:hobby-dev`
+
+* Varmista, että kaikki muutokset projektiin on kommitoitu ja puske sovellus Herokuun koneesi terminaalin komentoriviltä:
+
+  `git add .`
+
+  `git commit -m "Commitoidaan muutokset"`
+
+  `git push heroku master`
+
+* Voit nyt käynnistää sovelluksen Herokun ilmoittamasta osoitteesta nettiselaimella
 
 ## Käyttöohje
 
@@ -54,15 +80,27 @@ Voit listata järjestelmään kirjatut poissaolot valitsemalla *List absences*
 
 Voit listata järjestelmään kirjatut instrumentit valitsemalla *List instruments*
 
+#### Listaa paikat
+
+Voit listata järjestelmään kirjatut paikat valitsemalla *List places*
+
+#### Listaa huoneet
+
+Voit listata järjestelmään kirjatut huoneet valitsemalla *List rooms*
+
 #### Rekisteröidy
 
 Voit rekisteröityä järjestelmään valitsemalla *Register*
 
-#### Kirjautua
+#### Kirjaudu sisään
 
 Kun olet rekisteröitynyt, voit kirjautua järjestelmään valitsemalla *Log in*
 
 ### Kirjautumisen jälkeen toimivat toiminnot
+
+#### Uloskirjautuminen
+
+Voit kirjautua ulos järjestelmästä valitsemalla *Log out*
 
 #### Tietojesi päivittäminen
 
@@ -78,17 +116,33 @@ Voit lisätä uuden poissaolon valitsemalla *Add an absence*
 
 #### Poissaolojesi listaaminen
 
-Voit listata poissaolosi valitsemalla *View my absences*
+Voit listata poissaolosi valitsemalla *View my absences for the events*
 
 #### Instrumentin lisääminen
 
-Voit lisätä järjestelmään uuden instrumentin *Add an instrument*
+Voit lisätä järjestelmään uuden instrumentin valitsemalla *Add an instrument*
 
 #### Instrumentin päivittäminen
 
-Voit päivittää instrumentin valitsemalla *List instruments* näkymässä *Update instrument*
+Voit päivittää instrumentin tiedot valitsemalla *List instruments* näkymässä *Update instrument*
 
-## User storyt
+#### Paikan lisääminen
+
+Voit lisätä järjestelmään uuden paikan valitsemalla *Add a place*
+
+#### Paikan päivittäminen
+
+Voit päivittää paikan tiedot valitsemalla *List places* näkymässä *Update place*
+
+#### Huoneen lisääminen
+
+Voit lisätä järjestelmään uuden huoneen valitsemalla *Add a room*
+
+#### Huoneen päivittäminen
+
+Voit päivittää huoneen tiedot valitsemalla *List rooms* näkymässä *Update room*
+
+## User storyt ja esimerkki SQL-lausekkeet
 
 [User storyt](https://github.com/Robustic/Orchestime/tree/master/documentation/userstories.md)
 
@@ -98,20 +152,36 @@ Voit päivittää instrumentin valitsemalla *List instruments* näkymässä *Upd
 
 ## Aihekuvaus ja tietokantakaavio
 
-Orchestime -sovelluksen tarkoituksena on toimia orkesterin tapahtumien vuorovaikutteisena kalenterina. Sovelluksen avulla voidaan luoda, lukea, muokata ja poistaa orkesterin toimintaan liittyviä tapahtumia.
+Orchestime -sovelluksen tarkoituksena on toimia orkesterin tapahtumien vuorovaikutteisena kalenterina. Sovelluksen avulla voidaan luoda ja lukea orkesterin toimintaan liittyviä tapahtumia.
 
 Jokaiseen tapahtumaan liittyy huone, joka puolestaan liittyy johonkin paikkaan.
 
 Toisaalta tapahtumiin liittyy henkilöitä (soittajia), jotka voivat ilmoittaa itsensä poissaolevaksi. Jokainen henkilö soittaa jotakin instrumenttia.
 
-Henkilö voi ilmoittautua poissa-olevaksi tietyn mittaiseksi ajaksi. Poissaolojaksolle voi sattua monta tapahtumaa. Toisaalta tapahtumilla voi olla monta poissaoloa, koska useat henkilöt voivat olla poissa.
+Henkilö voi ilmoittautua poissaolevaksi tietyn mittaiseksi ajaksi. Poissaolojaksolle voi sattua monta tapahtumaa. Toisaalta tapahtumilla voi olla monta poissaoloa, koska useat henkilöt voivat olla poissa.
 
-Tietokantataulujen Event (tapahtuma) ja Absence (poissa-olo) välillä on monesta moneen yhteys, joten niiden välillä on liitostaulu EventAbsence.
+Tietokantataulujen Event (tapahtuma) ja Absence (poissa-olo) välillä on monesta moneen yhteys, joten niiden välillä on liitostaulu AbsenceEvent.
 
-Kullekin tapahtumalle voidaan suorittaa haku, jossa lasketaan kuinka monta soittajaa on poissa kyseisestä tapahtumasta.
+Kullekin tapahtumalle näytetään, kuinka monta soittajaa on poissa kyseisestä tapahtumasta.
 
-Lisäksi tulossa on toiminto, jolla voidaan laskea kunkin soittajan läsnäoloprosentti kaikista tapahtumista tai tietyllä aikavälillä.
+Lisäksi jokainen soittaja voi tarkistaa läsnäoloprosenttinsa huomioiden kaikki tapahtumat.
 
-<img src="https://github.com/Robustic/Orchestime/blob/master/documentation/pictures/DatabaseChart.png" width="1097">
+Kurssin aikana saatiin valmiiksi kaikki tietokantataulut ja tarpeellisimmat haut.
+
+<img src="https://github.com/Robustic/Orchestime/blob/master/documentation/pictures/DatabaseChart.png" width="1102">
 
 **Kuva 1.** *Tietokantakaavio.*
+
+## Jatkokehitysideat
+
+* Sovelluksen jatkokehitystä varten tulisi kirjoittaa testit tähän mennessä luodulle toiminnallisuudelle
+
+* Tapahtuman tietojen muokkaamismahdollisuus
+
+* Tapahtuman poistomahdollisuus
+
+* Poissaolon tietojen muokkaamismahdollisuus
+
+* Poissaolon poistomahdollisuus
+
+* Päivämäärän tarkkuudella tapahtuvan tapahtumien ja poissaolojen tarkastelun tarkentaminen minuuttitarkkuuteen

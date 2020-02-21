@@ -3,7 +3,7 @@
 ### Instrument
 
   ``` 
-CREATE TABLE instrument (
+CREATE TABLE Instrument (
     id INTEGER NOT NULL, 
     date_created DATETIME, 
     date_modified DATETIME, 
@@ -15,7 +15,7 @@ CREATE TABLE instrument (
 ### Place
 
   ``` 
-CREATE TABLE place (
+CREATE TABLE Place (
     id INTEGER NOT NULL, 
     date_created DATETIME, 
     date_modified DATETIME, 
@@ -28,7 +28,7 @@ CREATE TABLE place (
 ### Account
 
   ``` 
-CREATE TABLE account (
+CREATE TABLE Account (
     id INTEGER NOT NULL, 
     date_created DATETIME, 
     date_modified DATETIME, 
@@ -37,28 +37,28 @@ CREATE TABLE account (
     password VARCHAR(144) NOT NULL, 
     instrument_id INTEGER, 
     PRIMARY KEY (id), 
-    FOREIGN KEY(instrument_id) REFERENCES instrument (id)
+    FOREIGN KEY(instrument_id) REFERENCES Instrument (id)
 )
   ``` 
 
 ### Room
 
   ``` 
-CREATE TABLE room (
+CREATE TABLE Room (
     id INTEGER NOT NULL, 
     date_created DATETIME, 
     date_modified DATETIME, 
     name VARCHAR(144) NOT NULL, 
     place_id INTEGER, 
     PRIMARY KEY (id), 
-    FOREIGN KEY(place_id) REFERENCES place (id)
+    FOREIGN KEY(place_id) REFERENCES Place (id)
 )
   ``` 
 
 ### Absence 
 
   ``` 
-CREATE TABLE absence (
+CREATE TABLE Absence (
     id INTEGER NOT NULL, 
     date_created DATETIME, 
     date_modified DATETIME, 
@@ -68,14 +68,14 @@ CREATE TABLE absence (
     date_end DATETIME NOT NULL, 
     account_id INTEGER NOT NULL, 
     PRIMARY KEY (id), 
-    FOREIGN KEY(account_id) REFERENCES account (id)
+    FOREIGN KEY(account_id) REFERENCES Account (id)
 )
   ``` 
 
 ### Event
 
   ``` 
-CREATE TABLE event (
+CREATE TABLE Event (
     id INTEGER NOT NULL, 
     date_created DATETIME, 
     date_modified DATETIME, 
@@ -85,7 +85,7 @@ CREATE TABLE event (
     date_end DATETIME NOT NULL, 
     room_id INTEGER, 
     PRIMARY KEY (id), 
-    FOREIGN KEY(room_id) REFERENCES room (id)
+    FOREIGN KEY(room_id) REFERENCES Room (id)
 )
   ``` 
 
@@ -96,7 +96,7 @@ CREATE TABLE absence_event (
     absence_id INTEGER NOT NULL, 
     event_id INTEGER NOT NULL, 
     PRIMARY KEY (absence_id, event_id), 
-    FOREIGN KEY(absence_id) REFERENCES absence (id), 
-    FOREIGN KEY(event_id) REFERENCES event (id)
+    FOREIGN KEY(absence_id) REFERENCES Absence (id), 
+    FOREIGN KEY(event_id) REFERENCES Event (id)
 )
   ``` 

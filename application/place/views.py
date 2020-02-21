@@ -2,6 +2,7 @@ from flask import redirect, render_template, request, url_for
 from flask_login import login_required
 
 from application import app, db, get_css_framework, ITEMS_PER_PAGE
+from application.room.models import Room
 from application.place.models import Place
 from application.place.forms import PlaceForm
 from application.place.forms import PlaceUpdateForm

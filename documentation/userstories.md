@@ -1,10 +1,10 @@
-## User storyt
+## User storyt ja esimerkki SQL-lausekkeet
 
 ### Account
 
   * As an user, I can create a new account.
 
-  ``` 
+    ``` 
         INSERT INTO Account (
             date_created, 
             date_modified, 
@@ -12,8 +12,7 @@
             username, 
             password, 
             instrument_id
-        ) 
-        VALUES (
+        ) VALUES (
             CURRENT_TIMESTAMP, 
             CURRENT_TIMESTAMP, 
             'New Name', 
@@ -21,26 +20,26 @@
             'newpassword', 
             Null
         );
-  ``` 
+    ``` 
 
   * As an user, I can log in with my account.
 
-  ```
+    ```
         SELECT * FROM Account 
         WHERE Account.username = 'newusername'
         LIMIT 1 OFFSET 0;
-  ```
+    ```
 
   * As a logged in user, I can change my name and instrument.
 
-  ```
+    ```
         UPDATE Account 
         SET 
             date_modified=CURRENT_TIMESTAMP, 
             name='Other Name', 
             instrument_id=2 
         WHERE Account.id = 1;
-  ```
+    ```
 
 ### Instrument
 
@@ -48,8 +47,10 @@
 
     ```
         SELECT * FROM Instrument
+        ORDER BY Instrument.name
         LIMIT 5 OFFSET 0;
     ```
+
   * As a logged in user, I can add an instrument to the instrument list.
 
     ```
@@ -71,13 +72,13 @@
         SET 
             date_modified=CURRENT_TIMESTAMP, 
             name='Tuba'
-        WHERE Instrument.id = 2;
+        WHERE Instrument.id = 1;
     ```
 
   * As a logged in user, I can delete the instrument from the list.
 
     ```
-        DELETE FROM Instrument WHERE id = 1;
+        DELETE FROM Instrument WHERE Instrument.id = 1;
     ```
 
 ### Absence
@@ -94,7 +95,7 @@
   * As a logged in user, I can add an absence to the absence list.
 
     ```
-        INSERT INTO absence (
+        INSERT INTO Absence (
             date_created, 
             date_modified, 
             name, 
@@ -102,8 +103,7 @@
             date_start, 
             date_end, 
             account_id
-        ) 
-        VALUES (
+        ) VALUES (
             CURRENT_TIMESTAMP, 
             CURRENT_TIMESTAMP, 
             'Header of the new absent', 
@@ -134,11 +134,24 @@
         LIMIT 5 OFFSET 0;
     ```
 
+  * As an logged in user, I can see my participation percent.
+
+    ```
+        SELECT 
+            100 - COUNT(DISTINCT Event.id) * 100 / (SELECT COUNT(*) FROM Event) AS count_events 
+        FROM Account 
+        LEFT JOIN Absence ON Account.id = Absence.account_id 
+        LEFT JOIN absence_event ON Absence.id = absence_event.absence_id 
+        LEFT JOIN Event ON Event.id = absence_event.event_id 
+        WHERE (Account.id = 1) 
+        GROUP BY Account.id;
+    ```
+
 ### Event
 
   * As an user, I can list all events as a list.
 
-  ``` 
+    ``` 
         SELECT 
             Event.name AS event_name, 
             Event.description AS event_description, 
@@ -157,7 +170,7 @@
         GROUP BY Event.id, Room.name, Place.name 
         ORDER BY event_date_start, event_date_end, event_name 
         LIMIT 5 OFFSET 0;
-  ```
+    ```
 
   * As a logged in user, I can add an event to the event list.
 
@@ -170,8 +183,7 @@
             date_start, 
             date_end, 
             room_id
-        ) 
-        VALUES (
+        ) VALUES (
             CURRENT_TIMESTAMP, 
             CURRENT_TIMESTAMP, 
             'Header of the new event', 
@@ -205,20 +217,95 @@
         LEFT JOIN absence_event ON Event.id = absence_event.event_id
         LEFT JOIN Absence ON Absence.id = absence_event.absence_id
         LEFT JOIN Account ON Account.id = Absence.account_id
-        WHERE (Event.id = :x)
+        WHERE (Event.id = 1)
         ORDER BY account_name, absence_date_start, absence_date_end
         LIMIT 5 OFFSET 0;
     ```
 
-  * As an logged in user, I can see my participation percent.
+### Place
+
+  * As an user, I can list all places as a list.
 
     ```
-        SELECT 
-            100 - COUNT(DISTINCT Event.id) * 100 / (SELECT COUNT(*) FROM Event) AS count_events 
-        FROM Account 
-        LEFT JOIN Absence ON Account.id = Absence.account_id 
-        LEFT JOIN absence_event ON Absence.id = absence_event.absence_id 
-        LEFT JOIN Event ON Event.id = absence_event.event_id 
-        WHERE (Account.id = ?) 
-        GROUP BY Account.id;
+        SELECT * FROM Place
+        ORDER BY Place.name
+        LIMIT 5 OFFSET 0;
     ```
+    
+  * As a logged in user, I can add a place to the place list.
+
+    ```
+        INSERT INTO Place (
+            date_created, 
+            date_modified, 
+            name,
+            address
+        ) VALUES (
+            CURRENT_TIMESTAMP, 
+            CURRENT_TIMESTAMP, 
+            'Pace',
+            'Paceroad 42'
+        );
+    ```
+
+  * As a logged in user, I can update a place name or an address.
+
+    ```
+        UPDATE Place 
+        SET 
+            date_modified=CURRENT_TIMESTAMP, 
+            name='Place',
+            address='Placeroad 42'
+        WHERE Place.id = 1;
+    ```
+
+  * As a logged in user, I can delete the place from the list.
+
+    ```
+        DELETE FROM Place WHERE Place.id = 1;
+    ```
+
+### Room
+
+  * As an user, I can list all rooms as a list.
+
+    ```
+        SELECT * FROM Room
+        LEFT OUTER JOIN Place ON Place.id = Room.place_id
+        ORDER BY Place.name, Room.name
+        LIMIT 5 OFFSET 0;
+    ```
+    
+  * As a logged in user, I can add a room to the room list.
+
+    ```
+        INSERT INTO Room (
+            date_created, 
+            date_modified, 
+            name,
+            place_id
+        ) VALUES (
+            CURRENT_TIMESTAMP, 
+            CURRENT_TIMESTAMP, 
+            'Rome',
+            1
+        );
+    ```
+
+  * As a logged in user, I can update a room name and a place.
+
+    ```
+        UPDATE Room 
+        SET 
+            date_modified=CURRENT_TIMESTAMP, 
+            name='Room',
+            place_id=2
+        WHERE Room.id = 1;
+    ```
+
+  * As a logged in user, I can delete the room from the list.
+
+    ```
+        DELETE FROM Room WHERE Room.id = 1;
+    ```
+    
