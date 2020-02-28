@@ -63,3 +63,7 @@ Kurssin aikana saatiin valmiiksi kaikki tietokantataulut ja tarpeellisimmat haut
 * Poissaolon poistomahdollisuus
 
 * Päivämäärän tarkkuudella tapahtuvan tapahtumien ja poissaolojen tarkastelun tarkentaminen minuuttitarkkuuteen
+
+## Kokemuksia harjoitustyöstä
+
+Harjoitustyötä oli mukava tehdä. Sitä tehdessä oppi Pythonin ja Flaskin perusteet. Harjoitustyön lopputulos on sellainen, minkälaiseksi sen ennakoin tulevankin. Flaskin hyödyntämisen helppous hiukan yllätti. Toisaalta Pythonin käyttö tuntui Javan ja C++:an käytön jälkeen hankalalta, vaikka sitä pidetäänkin yleisesti helpompana ohjelmointikielenä.
