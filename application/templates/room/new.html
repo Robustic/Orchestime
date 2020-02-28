@@ -1,8 +1,11 @@
 {% extends "layout.html" %}
 
 {% block body %}
-<h3>New Room</h3>
+<h3>New room</h3>
 <form method="POST" action="{{ url_for('room_create') }}">
+    {% if message %}
+        {{ message }}
+    {% endif %}
     <table>
         <tr>
             <td>

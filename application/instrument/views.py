@@ -39,9 +39,10 @@ def instruments_delete(instrument_id):
     userswithdeletedinstrument = User.query.filter(User.instrument_id == instrument_id).all()
     for user in userswithdeletedinstrument:
         user.instrument_id = None
+    message = "Instrument " + instrument.name + " deleted!"
     db.session().delete(instrument)
     db.session().commit()
-    return redirect(url_for("instruments_index"))
+    return render_template("info.html", message=message)
 
 
 @app.route("/instrument/<instrument_id>/", methods=["GET"])
@@ -56,12 +57,14 @@ def instrument_update(instrument_id):
     form = InstrumentupdateForm(request.form)
     instru = Instrument.query.get(instrument_id)
     if not form.validate():
-        return render_template("instrument/update.html", instrument=instru, form=InstrumentupdateForm())
+        return render_template("instrument/update.html", instrument=instru, form=form)
 
     if form.name.data != "":
         instru.name = form.name.data
         db.session().commit()
-    return redirect(url_for("instruments_index"))
+
+    message = "Instrument updated!"
+    return render_template("instrument/update.html", instrument=instru, form=InstrumentupdateForm(), message=message)
 
 
 @app.route("/instrument/", methods=["POST"])
@@ -71,7 +74,9 @@ def instruments_create():
     if not form.validate():
         return render_template("instrument/new.html", form=form)
     
-    instr = Instrument(form.name.data)
-    db.session().add(instr)
+    instru = Instrument(form.name.data)
+    db.session().add(instru)
     db.session().commit()
-    return redirect(url_for("instruments_index"))
+
+    message = "New instrument created!"
+    return render_template("instrument/new.html", instrument=instru, form=InstrumentForm(), message=message)

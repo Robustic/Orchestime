@@ -39,9 +39,10 @@ def place_delete(place_id):
     roomswithdeletedplace = Room.query.filter(Room.place_id == place_id).all()
     for room in roomswithdeletedplace:
         room.place_id = None
+    message = "Place " + place.name + " deleted!"
     db.session().delete(place)
     db.session().commit()
-    return redirect(url_for("place_index"))
+    return render_template("info.html", message=message)
 
 
 @app.route("/place/<place_id>/", methods=["GET"])
@@ -58,13 +59,15 @@ def place_update(place_id):
     if form.name.data == "":
         form.name.data = place.name
     if not form.validate():
-        return render_template("place/update.html", place=place, form=PlaceUpdateForm())
+        return render_template("place/update.html", place=place, form=form)
 
     place.name = form.name.data
     if form.address.data != "":
         place.address = form.address.data
     db.session().commit()
-    return redirect(url_for("place_index"))
+
+    message = "Place updated!"
+    return render_template("place/update.html", place=place, form=form, message=message)
 
 
 @app.route("/place/", methods=["POST"])
@@ -77,4 +80,6 @@ def place_create():
     place = Place(form.name.data, form.address.data)
     db.session().add(place)
     db.session().commit()
-    return redirect(url_for("place_index"))
+
+    message = "Place created!"
+    return render_template("place/new.html", form=form, message=message)

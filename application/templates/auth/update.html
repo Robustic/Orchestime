@@ -3,10 +3,13 @@
 {% block body %}
 <h3>Update account</h3>
 <form method="POST" action="{{ url_for('auth_update', auth_id=current_user.id) }}">
+    {% if message %}
+        {{ message }}
+    {% endif %}
     <table>
         <tr>
             <td>
-                <b>Old name: {{ current_user.name }}</b>
+                <b>Old name: {{ current_user.name }} (empty field keeps old name)</b>
             </td>
         </tr>
         <tr>

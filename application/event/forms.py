@@ -4,10 +4,11 @@ from wtforms_components import DateField
 
 
 class EventForm(FlaskForm):
-    name = StringField("Event name", [validators.Length(min=2, max=140)])
+    name = StringField("Event name", [validators.DataRequired(message="Event name can't be empty"),
+                                      validators.Length(min=2, max=140)])
     description = StringField("Event description", [validators.Length(max=996)])
-    date_start = DateField('Start date')
-    date_end = DateField('End date')
+    date_start = DateField('Start date', [validators.DataRequired(message="Start date can't be empty")])
+    date_end = DateField('End date', [validators.DataRequired(message="End date can't be empty")])
 
     class Meta:
         csrf = False

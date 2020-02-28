@@ -58,4 +58,5 @@ def absences_create():
         db.session.execute(statement)
     db.session().commit()
 
-    return redirect(url_for("absences_index"))
+    message = "New absence created!"
+    return render_template("absence/new.html", form=form, message=message)

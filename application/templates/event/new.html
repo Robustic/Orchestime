@@ -3,10 +3,10 @@
 {% block body %}
 <h3>New event</h3>
 <form method="POST" action="{{ url_for('events_create') }}">
+    {% if message %}
+        {{ message }}
+    {% endif %}
     <table>
-        {% if message %}
-            {{ message }}
-        {% endif %}
         <tr>
             <td>
                 {{ form.name.label }}
@@ -60,7 +60,7 @@
                 <ul>
                     {% for date_enderror in form.date_end.errors %}
                     <li>
-                        {{ ddate_enderror }}
+                        {{ date_enderror }}
                     </li>
                     {% endfor %}
                 </ul>

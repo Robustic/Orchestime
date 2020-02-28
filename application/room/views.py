@@ -40,9 +40,10 @@ def room_delete(room_id):
     eventswithdeletedroom = Event.query.filter(Event.room_id == room_id).all()
     for event in eventswithdeletedroom:
         event.room_id = None
+    message = "Room " + room.name + " deleted!"
     db.session().delete(room)
     db.session().commit()
-    return redirect(url_for("room_index"))
+    return render_template("info.html", message=message)
 
 
 @app.route("/room/<room_id>/", methods=["GET"])
@@ -62,7 +63,7 @@ def room_update(room_id):
     if form.name.data == "":
         form.name.data = room.name
     if not form.validate():
-        return render_template("room/update.html", room=room, form=RoomUpdateForm(),
+        return render_template("room/update.html", room=room, form=form,
                                places=Place.query.order_by(Place.name).all(),
                                oldplace=Place.query.get(room.place_id))
 
@@ -70,7 +71,11 @@ def room_update(room_id):
     if place_id:
         room.place_id = place_id
     db.session().commit()
-    return redirect(url_for("room_index"))
+
+    message = "Room updated!"
+    return render_template("room/update.html", room=room, form=form,
+                           places=Place.query.order_by(Place.name).all(),
+                           oldplace=Place.query.get(room.place_id), message=message)
 
 
 @app.route("/room/", methods=["POST"])
@@ -79,11 +84,14 @@ def room_create():
     place_id = request.form.get('place_id')
     form = RoomForm(request.form)
     if not form.validate():
-        return render_template("room/new.html", form=RoomForm(), places=Place.query.order_by(Place.name).all())
+        return render_template("room/new.html", form=form, places=Place.query.order_by(Place.name).all())
 
     room = Room(form.name.data)
     if place_id:
         room.place_id = place_id
     db.session().add(room)
     db.session().commit()
-    return redirect(url_for("room_index"))
+
+    message = "Room created!"
+    return render_template("room/new.html", form=form, places=Place.query.order_by(Place.name).all(),
+                           message=message)

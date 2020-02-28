@@ -83,4 +83,6 @@ def events_create():
         db.session.execute(statement)
     db.session().commit()
 
-    return redirect(url_for("events_index"))
+    message = "New event created!"
+    return render_template("event/new.html", form=EventForm(), rooms=Room.query.order_by(Room.name).all(),
+                           message=message)

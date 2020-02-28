@@ -1,31 +1,34 @@
 {% extends "layout.html" %}
-  
+
 {% block body %}
 <h3>New instrument</h3>
 <form method="POST" action="{{ url_for('instruments_create') }}">
-  <table>
-    <tr>
-      <td>
-        {{ form.name.label }}
-      </td>
-      <td>
-        {{ form.name }}
-      </td>
-      <td>
-        <ul>
-          {% for nameerror in form.name.errors %}
-          <li>
-            {{ nameerror }}          
-          </li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <input type="submit" value="Add an new instrument"/>
-      </td>
-    </tr>
-  </table>
+    {% if message %}
+        {{ message }}
+    {% endif %}
+    <table>
+        <tr>
+            <td>
+                {{ form.name.label }}
+            </td>
+            <td>
+                {{ form.name }}
+            </td>
+            <td>
+                <ul>
+                    {% for nameerror in form.name.errors %}
+                    <li>
+                        {{ nameerror }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Add an new instrument"/>
+            </td>
+        </tr>
+    </table>
 </form>
 {% endblock %}

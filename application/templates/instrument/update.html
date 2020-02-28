@@ -1,45 +1,48 @@
 {% extends "layout.html" %}
-  
+
 {% block body %}
 <h3>Update instrument</h3>
 <form method="POST" action="{{ url_for('instrument_update', instrument_id=instrument.id) }}">
-  <table>
-    <tr>
-      <td>
-        <b>{{ instrument.name }}</b>
-      </td>
-    </tr>
-    <tr>
-      <td>
-        {{ form.name.label }}
-      </td>
-      <td>
-        {{ form.name }}
-      </td>
-      <td>
-        <ul>
-          {% for nameerror in form.name.errors %}
-          <li>
-            {{ nameerror }}          
-          </li>
-          {% endfor %}
-        </ul>
-      </td>
-    </tr>
-    <tr>
-      <td colspan="2">
-        <input type="submit" value="Update instrument name"/>
-      </td>
-    </tr>
-  </table>
+    {% if message %}
+        {{ message }}
+    {% endif %}
+    <table>
+        <tr>
+            <td>
+                <b>{{ instrument.name }}</b>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{ form.name.label }}
+            </td>
+            <td>
+                {{ form.name }}
+            </td>
+            <td>
+                <ul>
+                    {% for nameerror in form.name.errors %}
+                    <li>
+                        {{ nameerror }}
+                    </li>
+                    {% endfor %}
+                </ul>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="submit" value="Update instrument name"/>
+            </td>
+        </tr>
+    </table>
 </form>
 <table>
-  <tr>
-    <td>
-      <form method="POST" action="{{ url_for('instruments_delete', instrument_id=instrument.id) }}">
-        <input type="submit" value="Delete instrument"/>
-      </form>
-    <td>
-  </tr>
+    <tr>
+        <td>
+            <form method="POST" action="{{ url_for('instruments_delete', instrument_id=instrument.id) }}">
+                <input type="submit" value="Delete instrument"/>
+            </form>
+        <td>
+    </tr>
 </table>
 {% endblock %}

@@ -83,13 +83,15 @@ def auth_update(auth_id):
     if not form.validate():
         return render_template("auth/update.html", account=account,
                                instruments=Instrument.query.order_by(Instrument.name).all(),
-                               oldinstrument=Instrument.query.get(account.instrument_id), form=UpdateaccountForm())
+                               oldinstrument=Instrument.query.get(account.instrument_id), form=form)
     account.name = form.name.data
     if instrument_id:
         account.instrument_id = instrument_id
     db.session().commit()
-    message = "Your information have been saved"
-    return render_template("index.html", message=message)
+    message = "Updated information have been saved!"
+    return render_template("auth/update.html", account=account,
+                           instruments=Instrument.query.order_by(Instrument.name).all(),
+                           oldinstrument=Instrument.query.get(account.instrument_id), form=form, message=message)
 
 
 @app.route("/auth/login", methods=["GET", "POST"])
@@ -97,6 +99,8 @@ def auth_login():
     if request.method == "GET":
         return render_template("auth/loginform.html", form=LoginForm())
     form = LoginForm(request.form)
+    if not form.validate():
+        return render_template("auth/loginform.html", form=form)
     userfromdb = User.query.filter_by(username=form.username.data).first()
     if not userfromdb:
         return render_template("auth/loginform.html", form=form, error="No such username or password")
@@ -113,4 +117,4 @@ def auth_login():
 def auth_logout():
     logout_user()
     message = "You have logged out"
-    return render_template("index.html", message=message)
+    return render_template("info.html", message=message)
