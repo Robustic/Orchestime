@@ -38,49 +38,51 @@
             </li>
             {% endif %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('events_index') }}">List events</a>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonEvents"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Events and Absences</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ url_for('events_index') }}">List events</a>
+                        {% if current_user.is_authenticated %}
+                            <a class="dropdown-item" href="{{ url_for('events_form') }}">Add an event</a>
+                        {% endif %}
+                        <a class="dropdown-item" href="{{ url_for('absences_index') }}">List absences</a>
+                        {% if current_user.is_authenticated %}
+                            <a class="dropdown-item" href="{{ url_for('absences_form') }}">Add an absence</a>
+                            <a class="dropdown-item" href="{{ url_for('auth_view_my_absences', auth_id=current_user.id) }}">
+                                View my absences for the events</a>
+                        {% endif %}
+                    </div>
+                </div>
             </li>
-            {% if current_user.is_authenticated %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('events_form') }}">Add an event</a>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonInstruments"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Instruments</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ url_for('instruments_index') }}">List instruments</a>
+                        {% if current_user.is_authenticated %}
+                            <a class="dropdown-item" href="{{ url_for('instruments_form') }}">Add an instrument</a>
+                        {% endif %}
+                    </div>
+                </div>
             </li>
-            {% endif %}
             <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('absences_index') }}">List absences</a>
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButtonPlaces"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Rooms and Places</button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="{{ url_for('place_index') }}">List places</a>
+                        {% if current_user.is_authenticated %}
+                            <a class="dropdown-item" href="{{ url_for('place_form') }}">Add a place</a>
+                        {% endif %}
+                            <a class="dropdown-item" href="{{ url_for('room_index') }}">List rooms</a>
+                        {% if current_user.is_authenticated %}
+                            <a class="dropdown-item"" href="{{ url_for('room_form') }}">Add a room</a>
+                        {% endif %}
+                    </div>
+                </div>
             </li>
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('absences_form') }}">Add an absence</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('auth_view_my_absences', auth_id=current_user.id) }}">View my
-                    absences for the events</a>
-            </li>
-            {% endif %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('instruments_index') }}">List instruments</a>
-            </li>
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('instruments_form') }}">Add an instrument</a>
-            </li>
-            {% endif %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('place_index') }}">List places</a>
-            </li>
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('place_form') }}">Add a place</a>
-            </li>
-            {% endif %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('room_index') }}">List rooms</a>
-            </li>
-            {% if current_user.is_authenticated %}
-            <li class="nav-item">
-                <a class="nav-link" href="{{ url_for('room_form') }}">Add a room</a>
-            </li>
-            {% endif %}
         </ul>
     </div>
 </nav>
